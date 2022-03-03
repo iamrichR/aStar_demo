@@ -14,6 +14,10 @@ class Controller {
         //this.model.tilemap.checkerboard();
     }
 
+    startSearch() {
+        console.log("starting search");
+    }
+
     update() {
         this.model.update();
     }

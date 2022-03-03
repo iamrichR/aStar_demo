@@ -12,6 +12,9 @@ class App {
             this.buildSketch(sketch);
         });
         this.controller = new Controller();
+        this.attachButtonEvents({
+            startButton: document.getElementById("start-btn"),
+        });
     }
 
     buildSketch(sketch) {
@@ -33,8 +36,16 @@ class App {
         //     this.controller.windowResized();
         // };
     }
+
+    attachButtonEvents(elements) {
+        elements.startButton.addEventListener(
+            "click",
+            this.controller.startSearch
+        );
+    }
 }
 
-let app = new App();
-
-app.setup();
+document.addEventListener("DOMContentLoaded", () => {
+    let app = new App();
+    app.setup();
+});
