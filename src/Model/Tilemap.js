@@ -53,15 +53,15 @@ class Tilemap {
                 //  CHECKERBOARD PATTERN  //
                 // if (tileX % 2 == 0) {
                 //     if (tileY % 2 == 0) {
-                //         cell.isWall = false;
+                //         cell.toggleWall();
                 //     } else {
-                //         cell.isWall = true;
+                //         cell.toggleWall();
                 //     }
                 // } else {
                 //     if (tileY % 2 == 0) {
-                //         cell.isWall = true;
+                //         cell.toggleWall();
                 //     } else {
-                //         cell.isWall = false;
+                //         cell.toggleWall();
                 //     }
                 // }
                 // PERIMETER FILL //
@@ -71,7 +71,7 @@ class Tilemap {
                 //     tileX == this.mapWidth - 1 ||
                 //     tileY == this.mapHeight - 1
                 // ) {
-                //     cell.isWall = false;
+                //     cell.toggleWall();
                 // }
                 // WINDOW PATTERN //
                 if (
@@ -82,7 +82,7 @@ class Tilemap {
                     tileX == this.width - 1 ||
                     tileY == this.height - 1
                 ) {
-                    cell.isWall = true;
+                    cell.toggleWall();
                 }
             });
         });

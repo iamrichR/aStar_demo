@@ -29,16 +29,6 @@ class Entity {
         this.x += xDirection * magnitude;
         this.y += yDirection * magnitude;
     }
-
-    getDrawProps() {
-        let drawFunction = ellipse;
-        let color = "#ff0000";
-
-        return {
-            drawFunction: drawFunction,
-            color: color,
-        };
-    }
 }
 
 export default Entity;

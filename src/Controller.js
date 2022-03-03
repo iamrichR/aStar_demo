@@ -9,9 +9,9 @@ class Controller {
     setup(sketch) {
         this.view = new View(sketch);
         this.model = new Model(this.view.getMapDetails());
-        this.model.tilemap.checkerboard();
-        this.view.tilemap.updateMap(this.model.tilemap.grid);
         this.model.setupObservers(this.view.tilemap.grid);
+        this.model.createInitialState();
+        //this.model.tilemap.checkerboard();
     }
 
     update() {
