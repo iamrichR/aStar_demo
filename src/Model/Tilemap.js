@@ -41,10 +41,14 @@ class Tilemap {
         });
     }
 
-    createWall(tileX, tileY) {
+    toggleWallAtTile(tileX, tileY) {
         if (this.isInBounds(tileX, tileY)) {
-            this.grid[tileX][tileY].toggleWall();
+            this.grid[tileX][tileY].createWall();
         }
+    }
+
+    createEntityAtTile(tileX, tileY, entity) {
+        this.grid[tileX][tileY].setEntity(entity);
     }
 
     checkerboard() {

@@ -1,4 +1,7 @@
 import Tilemap from "./Tilemap";
+import Wall from "./Entities/Wall";
+import StartPoint from "./Entities/StartPoint";
+import EndPoint from "./Entities/EndPoint";
 
 class Model {
     constructor(mapDetails) {
@@ -11,23 +14,23 @@ class Model {
 
     createInitialState() {
         //start point in mid-left area
-        this.tilemap.createWall(8, 12);
+        this.tilemap.createEntityAtTile(8, 12, new StartPoint(0, 0));
         //target point in mid-right area
-        this.tilemap.createWall(24, 12);
+        this.tilemap.createEntityAtTile(24, 12, new EndPoint(0, 0));
         //couple of wall tiles in middle, blocking a straight line path
-        this.tilemap.createWall(15, 9);
-        this.tilemap.createWall(15, 10);
-        this.tilemap.createWall(16, 10);
-        this.tilemap.createWall(16, 11);
-        this.tilemap.createWall(16, 12);
-        this.tilemap.createWall(16, 13);
-        this.tilemap.createWall(16, 14);
-        this.tilemap.createWall(15, 14);
-        this.tilemap.createWall(15, 15);
+        this.tilemap.createEntityAtTile(15, 9, new Wall(0, 0));
+        this.tilemap.createEntityAtTile(15, 10, new Wall(0, 0));
+        this.tilemap.createEntityAtTile(16, 10, new Wall(0, 0));
+        this.tilemap.createEntityAtTile(16, 11, new Wall(0, 0));
+        this.tilemap.createEntityAtTile(16, 12, new Wall(0, 0));
+        this.tilemap.createEntityAtTile(16, 13, new Wall(0, 0));
+        this.tilemap.createEntityAtTile(16, 14, new Wall(0, 0));
+        this.tilemap.createEntityAtTile(15, 14, new Wall(0, 0));
+        this.tilemap.createEntityAtTile(15, 15, new Wall(0, 0));
     }
 
-    createWall(tileX, tileY) {
-        this.tilemap.createWall(tileX, tileY);
+    toggleWallAtPoint(tileX, tileY) {
+        this.tilemap.toggleWallAtTile(tileX, tileY);
     }
 
     setupObservers(viewTiles) {

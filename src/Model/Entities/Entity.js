@@ -8,6 +8,18 @@ class Entity {
         return [this.x, this.y];
     }
 
+    getEntityType() {
+        return this.constructor.name;
+    }
+
+    setX(x) {
+        this.x = x;
+    }
+
+    setY(y) {
+        this.y = y;
+    }
+
     move(directionStr, magnitude = 1) {
         let yDirection = 0;
         let xDirection = 0;

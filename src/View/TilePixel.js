@@ -6,9 +6,7 @@ class TilePixel {
         this.coordY = tileY * height;
         this.width = width;
         this.height = height;
-        this.isWall = false;
-        this.isOccupied = false;
-        this.entity = null;
+        this.entityStr = "";
     }
 
     getCoord() {
@@ -20,42 +18,50 @@ class TilePixel {
     }
 
     draw(sketch) {
-        if (this.isWall) {
-            this.drawFilled(sketch);
-        } else if (this.isOccupied) {
-            this.drawOutline(sketch);
-            this.drawEntity(sketch);
-        } else {
-            this.drawOutline(sketch);
+        this.drawOutline(sketch);
+        if (this.entityStr.length > 0) {
+            switch (this.entityStr.toLowerCase()) {
+                case "wall":
+                    this.drawFilled(sketch);
+                    break;
+                case "startpoint":
+                    this.drawEllipse(sketch, "#dc143c");
+                    break;
+                case "endpoint":
+                    this.drawEllipse(sketch, "#4169e1");
+                    break;
+                default:
+                    this.drawFilled(sketch, "#ff7f50");
+                    break;
+            }
         }
     }
 
-    drawOutline(sketch) {
+    drawOutline(sketch, fill = "#000000") {
         let [x, y] = this.getCoord();
         let dx = x + this.width;
         let dy = y + this.height;
+        sketch.fill(fill);
         sketch.line(x, y, dx, y);
         sketch.line(x, y, x, dy);
         sketch.line(dx, dy, dx, y);
         sketch.line(dx, dy, x, dy);
     }
 
-    drawFilled(sketch) {
+    drawFilled(sketch, fill = "#000000") {
         let [x, y] = this.getCoord();
-        sketch.fill("#000000");
+        sketch.fill(fill);
         sketch.rect(x, y, this.width, this.height);
     }
 
-    drawEntity(sketch) {
+    drawEllipse(sketch, fill = "#000000") {
         let [x, y] = this.getCoord();
-        let drawProps = this.entity.getDrawProps();
-        sketch.fill(drawProps.color);
+        sketch.fill(fill);
         sketch.ellipse(x, y, this.width, this.height);
     }
 
     updateState(stateObj) {
-        this.isWall = stateObj.isWall;
-        this.isOccupied = stateObj.isOccupied;
+        this.entityStr = stateObj.entity.getEntityType();
     }
 }
 

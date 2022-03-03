@@ -23,7 +23,7 @@ class Controller {
     }
 
     mousePressed(mouseX, mouseY) {
-        this.model.createWall(...this.view.getTile(mouseX, mouseY));
+        this.model.toggleWallAtPoint(...this.view.getTile(mouseX, mouseY));
     }
 }
 

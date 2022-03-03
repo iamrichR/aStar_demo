@@ -1,20 +1,37 @@
+import Wall from "./Entities/Wall";
+
 class Tile {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.isWall = false;
-        this.isOccupied = false;
         this.entity = null;
         this.observers = [];
     }
 
     toggleWall() {
-        this.isWall = this.isWall ? false : true;
+        if (typeof this.entity == Wall) {
+            this.removeEntity();
+        } else {
+            this.createWall();
+        }
         this.notifyObservers();
     }
 
-    setWall(bool) {
-        this.isWall = bool;
+    createWall() {
+        let wall = new Wall(this.x, this.y);
+        this.entity = wall;
+        this.notifyObservers();
+    }
+
+    setEntity(entity) {
+        entity.setX(this.x);
+        entity.setY(this.y);
+        this.entity = entity;
+        this.notifyObservers();
+    }
+
+    removeEntity() {
+        this.entity = null;
         this.notifyObservers();
     }
 
@@ -30,8 +47,7 @@ class Tile {
 
     getState() {
         return {
-            isWall: this.isWall,
-            isOccupied: this.isOccupied,
+            entity: this.entity,
         };
     }
 
