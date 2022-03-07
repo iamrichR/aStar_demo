@@ -14,8 +14,12 @@ class Controller {
         //this.model.tilemap.checkerboard();
     }
 
-    startSearch() {
-        console.log("starting search");
+    startSearch(sketch) {
+        if (!this.model.isSearching) {
+            let searchDetails = this.model.startSearch();
+
+            this.view.animateSearch(sketch, this.searchDetails);
+        }
     }
 
     update() {

@@ -7,7 +7,6 @@ class App {
     constructor() {}
 
     setup() {
-        //this breaks if it's not an anonymous function
         this.sketch = new p5((sketch) => {
             this.buildSketch(sketch);
         });
@@ -38,10 +37,9 @@ class App {
     }
 
     attachButtonEvents(elements) {
-        elements.startButton.addEventListener(
-            "click",
-            this.controller.startSearch
-        );
+        elements.startButton.addEventListener("click", () => {
+            this.controller.startSearch(this.sketch);
+        });
     }
 }
 

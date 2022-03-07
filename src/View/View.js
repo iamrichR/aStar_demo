@@ -9,6 +9,10 @@ class View {
         sketch.ellipseMode(sketch.CORNER);
     }
 
+    animateSearch(sketch) {
+        console.log("animating");
+    }
+
     getMapDetails() {
         return this.tilemap.getMapDetails();
     }
