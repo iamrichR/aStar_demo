@@ -42,7 +42,6 @@ class Model {
 
     startSearch() {
         this.isSearching = true;
-        console.log("starting search...");
         let startPoint = this.tilemap.grid[8][12];
         let goalPoint = this.tilemap.grid[24][12];
         let search = new Search(startPoint, goalPoint, this.tilemap.grid);

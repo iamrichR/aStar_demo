@@ -9,16 +9,28 @@ class View {
         sketch.ellipseMode(sketch.CORNER);
     }
 
-    animateSearch(sketch) {
+    animateSearch(sketch, searchDetails) {
         console.log("animating");
+        const path = searchDetails.path;
+        const start = searchDetails.start;
+        const end = searchDetails.end;
+        let current = this.tilemap.getTile(start[0], start[1]);
+        current.considered = true;
+        current.inPath = true;
+
+        for (let i = 0; i < path.length; i++) {
+            current = this.tilemap.getAdjacent(path[i], current);
+            current.considered = true;
+            current.inPath = true;
+        }
     }
 
     getMapDetails() {
         return this.tilemap.getMapDetails();
     }
 
-    getTile(mouseX, mouseY) {
-        return this.tilemap.getTile(mouseX, mouseY);
+    getTileFromMouse(mouseX, mouseY) {
+        return this.tilemap.getTileFromPixelCoord(mouseX, mouseY);
     }
 
     draw(sketch) {

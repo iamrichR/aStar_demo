@@ -10,6 +10,33 @@ class TilemapPixelData {
         this.grid = this.buildGrid();
     }
 
+    getTile(tileX, tileY) {
+        if (this.isInBounds(tileX, tileY)) {
+            return this.grid[tileX][tileY];
+        } else {
+            console.log("tile value out of bounds:  ", tileX, tileY);
+            return null;
+        }
+    }
+
+    getAdjacent(dir, currentTile) {
+        const [currX, currY] = currentTile.getTileCoord();
+        switch (dir.toLowerCase()) {
+            case "north":
+                return this.getTile(currX, currY - 1);
+                break;
+            case "east":
+                return this.getTile(currX + 1, currY);
+                break;
+            case "south":
+                return this.getTile(currX, currY + 1);
+                break;
+            case "west":
+                return this.getTile(currX - 1, currY);
+                break;
+        }
+    }
+
     getTileDimensions() {
         return [this.mapWidth, this.mapHeight];
     }
@@ -44,6 +71,18 @@ class TilemapPixelData {
         return grid;
     }
 
+    isInBounds(tileX, tileY) {
+        if (tileX >= this.width || tileX < 0) {
+            return false;
+        }
+
+        if (tileY >= this.height || tileY < 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     updateMap(modelGrid) {
         for (let x = 0; x < modelGrid.length; x++) {
             for (let y = 0; y < modelGrid[x].length; y++) {
@@ -58,7 +97,7 @@ class TilemapPixelData {
         return [w, h];
     }
 
-    getTile(pixelX, pixelY) {
+    getTileFromPixelCoord(pixelX, pixelY) {
         let [tileX, tileY] = [
             this.getTileXFromCoord(pixelX),
             this.getTileYFromCoord(pixelY),

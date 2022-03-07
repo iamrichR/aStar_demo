@@ -7,10 +7,16 @@ class TilePixel {
         this.width = width;
         this.height = height;
         this.entityStr = "";
+        this.considered = false;
+        this.inPath = false;
     }
 
     getCoord() {
         return [this.coordX, this.coordY];
+    }
+
+    getTileCoord() {
+        return [this.tileX, this.tileY];
     }
 
     notify(stateObj) {
@@ -19,6 +25,8 @@ class TilePixel {
 
     draw(sketch) {
         this.drawOutline(sketch);
+        if (this.considered) this.drawConsidered(sketch);
+        if (this.inPath) this.drawInPath(sketch);
         if (this.entityStr.length > 0) {
             switch (this.entityStr.toLowerCase()) {
                 case "wall":
@@ -35,6 +43,21 @@ class TilePixel {
                     break;
             }
         }
+    }
+
+    drawConsidered(sketch) {
+        let [x, y] = this.getCoord();
+        sketch.fill("#fad6b1");
+        sketch.rect(x, y, this.width, this.height);
+    }
+
+    drawInPath(sketch) {
+        //TODO - draw a vertical or horizontal line, depending on the path
+        let [x, y] = this.getCoord();
+        //let midX = x + this.width / 2 - 1;
+        let midY = y + this.height / 2 - 1;
+        sketch.fill("#ff0000");
+        sketch.rect(x, midY, this.width, 3);
     }
 
     drawOutline(sketch, fill = "#000000") {

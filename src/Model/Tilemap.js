@@ -6,6 +6,10 @@ class Tilemap {
         this.grid = this.buildGrid();
     }
 
+    getTile(x, y) {
+        return this.grid[x][y];
+    }
+
     setDimensions(dimensions) {
         [this.width, this.height] = dimensions;
     }

@@ -18,7 +18,7 @@ class Controller {
         if (!this.model.isSearching) {
             let searchDetails = this.model.startSearch();
 
-            this.view.animateSearch(sketch, this.searchDetails);
+            this.view.animateSearch(sketch, searchDetails);
         }
     }
 
@@ -31,7 +31,9 @@ class Controller {
     }
 
     mousePressed(mouseX, mouseY) {
-        this.model.toggleWallAtPoint(...this.view.getTile(mouseX, mouseY));
+        this.model.toggleWallAtPoint(
+            ...this.view.getTileFromMouse(mouseX, mouseY)
+        );
     }
 }
 

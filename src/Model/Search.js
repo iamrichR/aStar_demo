@@ -14,19 +14,18 @@ class Search {
         while (!complete) {
             if (currentTile == this.end) {
                 complete = true;
-                console.log("here?");
                 continue;
             }
 
             currentTile = this.map[coordX + 1][coordY];
             [coordX, coordY] = currentTile.getTileCoord();
-            this.path.push([1, 0]);
+            this.path.push("east");
         }
 
         return {
             success: true,
-            start: this.start,
-            end: this.end,
+            start: this.start.getTileCoord(),
+            end: this.end.getTileCoord(),
             path: this.path,
         };
     }
