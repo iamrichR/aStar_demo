@@ -3,7 +3,8 @@ const path = require("path");
 const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
-    entry: "./src/App.js",
+    context: path.resolve(__dirname, "src"),
+    entry: "./App.js",
     output: {
         path: path.resolve(__dirname, "dist"),
         library: "App",
@@ -16,7 +17,8 @@ const config = {
                 use: ["source-map-loader"],
             },
             {
-                test: /\.(js|jsx)$/i,
+                test: /\.(ts|js)x?$/i,
+                exclude: /node_modules/,
                 loader: "babel-loader",
             },
             {
@@ -24,6 +26,9 @@ const config = {
                 type: "asset",
             },
         ],
+    },
+    resolve: {
+        extensions: [".ts", ".js"],
     },
 };
 

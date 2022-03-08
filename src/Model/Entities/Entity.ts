@@ -1,5 +1,8 @@
 class Entity {
-    constructor(x, y) {
+    x: number;
+    y: number;
+
+    constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
     }
@@ -12,18 +15,18 @@ class Entity {
         return this.constructor.name;
     }
 
-    setX(x) {
+    setX(x: number) {
         this.x = x;
     }
 
-    setY(y) {
+    setY(y: number) {
         this.y = y;
     }
 
-    move(directionStr, magnitude = 1) {
+    move(direction: string, magnitude: number = 1) {
         let yDirection = 0;
         let xDirection = 0;
-        switch (directionStr.toUpperCase()) {
+        switch (direction.toUpperCase()) {
             case "UP":
                 yDirection = -1;
                 break;
