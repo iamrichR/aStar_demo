@@ -18,7 +18,9 @@ class Controller {
         if (!this.model.isSearching) {
             let searchDetails = this.model.startSearch();
 
-            this.view.animateSearch(sketch, searchDetails);
+            //TODO - you shouldn't need to activate anything in view
+            //just make use of the tile observers to update search details
+            //this.view.animateSearch(sketch, searchDetails);
         }
     }
 

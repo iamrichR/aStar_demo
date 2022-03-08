@@ -44,14 +44,26 @@ class Model {
         this.isSearching = true;
         let startPoint = this.tilemap.grid[8][12];
         let goalPoint = this.tilemap.grid[24][12];
-        let search = new Search(startPoint, goalPoint, this.tilemap.grid);
-        let searchDetails = search.simpleTestSearch();
+        // let search = new Search();
+        // let searchDetails = search.simpleTestSearch(
+        //     startPoint,
+        //     goalPoint,
+        //     this.tilemap.grid
+        // );
 
-        if (searchDetails.success) {
-            this.lastSearch = search;
-        }
+        // if (searchDetails.success) {
+        //     this.lastSearch = search;
+        //     this.isSearching = false;
+        // }
 
-        return searchDetails;
+        // return searchDetails;
+
+        let search = new Search();
+        let searchDetails = search.aStarSearch(
+            startPoint,
+            goalPoint,
+            this.tilemap
+        );
     }
 }
 

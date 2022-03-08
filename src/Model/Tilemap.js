@@ -7,7 +7,47 @@ class Tilemap {
     }
 
     getTile(x, y) {
-        return this.grid[x][y];
+        if (this.isInBounds(x, y)) {
+            return this.grid[x][y];
+        } else {
+            return null;
+        }
+    }
+
+    getAdjacent(dir, currentTile) {
+        const [currX, currY] = currentTile.getTileCoord();
+        switch (dir.toLowerCase()) {
+            case "north":
+                return this.getTile(currX, currY - 1);
+                break;
+            case "east":
+                return this.getTile(currX + 1, currY);
+                break;
+            case "south":
+                return this.getTile(currX, currY + 1);
+                break;
+            case "west":
+                return this.getTile(currX - 1, currY);
+                break;
+        }
+        return null;
+    }
+
+    getDistance(a, b) {
+        const [aX, aY] = a.getTileCoord();
+        const [bX, bY] = b.getTileCoord();
+        const xDistance = Math.abs(aX - bX);
+        const yDistance = Math.abs(aY - bY);
+        return xDistance + yDistance;
+    }
+
+    getAllAdjacentTiles(tile) {
+        return {
+            north: this.getAdjacent("north", tile),
+            east: this.getAdjacent("east", tile),
+            west: this.getAdjacent("west", tile),
+            south: this.getAdjacent("south", tile),
+        };
     }
 
     setDimensions(dimensions) {
