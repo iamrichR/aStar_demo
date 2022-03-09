@@ -1,29 +1,16 @@
-import TilePixel from "./TilePixel";
+import p5 from "p5";
+import resolutions from "./resolutions";
 
 class ViewWindow {
-    constructor(sketch) {
-        this.resolutions = [
-            {
-                width: 256,
-                height: 144,
-            },
-            {
-                width: 320,
-                height: 240,
-            },
-            {
-                width: 480,
-                height: 360,
-            },
-            {
-                width: 640,
-                height: 480,
-            },
-            {
-                width: 1280,
-                height: 720,
-            },
-        ];
+    resolutions: { width: number; height: number }[];
+    WIDTH_MAX: number;
+    breakpoints: number[];
+    width: number;
+    height: number;
+    canvas: p5.Renderer;
+
+    constructor(sketch: p5) {
+        this.resolutions = resolutions;
         this.WIDTH_MAX = 1000;
         this.breakpoints = [];
 

@@ -1,3 +1,4 @@
+import TilePixel from "../View/TilePixel";
 import Entity from "./Entities/Entity";
 import Wall from "./Entities/Wall";
 
@@ -5,7 +6,7 @@ class Tile {
     x: number;
     y: number;
     entity: Entity | null;
-    observers: any[];
+    observers: TilePixel[];
 
     constructor(x: number, y: number) {
         this.x = x;
@@ -57,7 +58,7 @@ class Tile {
         };
     }
 
-    subscribe(observer: any) {
+    subscribe(observer: TilePixel) {
         this.observers.push(observer);
     }
 

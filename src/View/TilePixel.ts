@@ -1,5 +1,18 @@
+import Entity from "../Model/Entities/Entity";
+import p5 from "p5";
+
 class TilePixel {
-    constructor(tileX, tileY, width, height) {
+    tileX: number;
+    tileY: number;
+    coordX: number;
+    coordY: number;
+    width: number;
+    height: number;
+    entityStr: string;
+    considered: boolean;
+    inPath: boolean;
+
+    constructor(tileX: number, tileY: number, width: number, height: number) {
         this.tileX = tileX;
         this.tileY = tileY;
         this.coordX = tileX * width;
@@ -19,11 +32,11 @@ class TilePixel {
         return [this.tileX, this.tileY];
     }
 
-    notify(stateObj) {
+    notify(stateObj: { entity: Entity | null }) {
         this.updateState(stateObj);
     }
 
-    draw(sketch) {
+    draw(sketch: p5) {
         this.drawOutline(sketch);
         if (this.considered) this.drawConsidered(sketch);
         if (this.inPath) this.drawInPath(sketch);
@@ -45,13 +58,13 @@ class TilePixel {
         }
     }
 
-    drawConsidered(sketch) {
+    drawConsidered(sketch: p5) {
         let [x, y] = this.getCoord();
         sketch.fill("#fad6b1");
         sketch.rect(x, y, this.width, this.height);
     }
 
-    drawInPath(sketch) {
+    drawInPath(sketch: p5) {
         //TODO - draw a vertical or horizontal line, depending on the path
         let [x, y] = this.getCoord();
         //let midX = x + this.width / 2 - 1;
@@ -60,7 +73,7 @@ class TilePixel {
         sketch.rect(x, midY, this.width, 3);
     }
 
-    drawOutline(sketch, fill = "#000000") {
+    drawOutline(sketch: p5, fill = "#000000") {
         let [x, y] = this.getCoord();
         let dx = x + this.width;
         let dy = y + this.height;
@@ -71,20 +84,24 @@ class TilePixel {
         sketch.line(dx, dy, x, dy);
     }
 
-    drawFilled(sketch, fill = "#000000") {
+    drawFilled(sketch: p5, fill = "#000000") {
         let [x, y] = this.getCoord();
         sketch.fill(fill);
         sketch.rect(x, y, this.width, this.height);
     }
 
-    drawEllipse(sketch, fill = "#000000") {
+    drawEllipse(sketch: p5, fill = "#000000") {
         let [x, y] = this.getCoord();
         sketch.fill(fill);
         sketch.ellipse(x, y, this.width, this.height);
     }
 
-    updateState(stateObj) {
-        this.entityStr = stateObj.entity.getEntityType();
+    updateState(stateObj: { entity: Entity | null }) {
+        if (stateObj.entity == null) {
+            this.entityStr = "";
+        } else {
+            this.entityStr = stateObj.entity.getEntityType();
+        }
     }
 }
 

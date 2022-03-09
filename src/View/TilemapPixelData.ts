@@ -1,16 +1,25 @@
 import TilePixel from "./TilePixel";
+import p5 from "p5";
 
-class TilemapPixelData {
-    constructor(canvas) {
+class TilemapPixel {
+    mapWidth: number;
+    mapHeight: number;
+    tileWidth: number;
+    tileHeight: number;
+    grid: TilePixel[][];
+
+    constructor(canvasWidth: number, canvasHeight: number) {
         //width 32 x height 24
-        this.canvas = canvas;
         this.mapWidth = 32;
         this.mapHeight = 24;
-        [this.tileWidth, this.tileHeight] = this.calcTileDimensions();
+        [this.tileWidth, this.tileHeight] = this.calcTileDimensions(
+            canvasWidth,
+            canvasHeight
+        );
         this.grid = this.buildGrid();
     }
 
-    getTile(tileX, tileY) {
+    getTile(tileX: number, tileY: number) {
         if (this.isInBounds(tileX, tileY)) {
             return this.grid[tileX][tileY];
         } else {
@@ -19,9 +28,9 @@ class TilemapPixelData {
         }
     }
 
-    getAdjacent(dir, currentTile) {
+    getAdjacent(direction: string, currentTile: TilePixel) {
         const [currX, currY] = currentTile.getTileCoord();
-        switch (dir.toLowerCase()) {
+        switch (direction.toLowerCase()) {
             case "north":
                 return this.getTile(currX, currY - 1);
                 break;
@@ -47,7 +56,7 @@ class TilemapPixelData {
         };
     }
 
-    draw(sketch) {
+    draw(sketch: p5) {
         this.grid.forEach((column) => {
             column.forEach((tile) => {
                 tile.draw(sketch);
@@ -71,33 +80,33 @@ class TilemapPixelData {
         return grid;
     }
 
-    isInBounds(tileX, tileY) {
-        if (tileX >= this.width || tileX < 0) {
+    isInBounds(tileX: number, tileY: number) {
+        if (tileX >= this.mapWidth || tileX < 0) {
             return false;
         }
 
-        if (tileY >= this.height || tileY < 0) {
+        if (tileY >= this.mapHeight || tileY < 0) {
             return false;
         }
 
         return true;
     }
 
-    updateMap(modelGrid) {
-        for (let x = 0; x < modelGrid.length; x++) {
-            for (let y = 0; y < modelGrid[x].length; y++) {
-                this.grid[x][y].updateState(modelGrid[x][y].getState());
-            }
-        }
-    }
+    // updateMap(modelGrid:Tile[][]) {
+    //     for (let x = 0; x < modelGrid.length; x++) {
+    //         for (let y = 0; y < modelGrid[x].length; y++) {
+    //             this.grid[x][y].updateState(modelGrid[x][y].getState());
+    //         }
+    //     }
+    // }
 
-    calcTileDimensions() {
-        let w = this.canvas.canvas.width / this.mapWidth;
-        let h = this.canvas.canvas.height / this.mapHeight;
+    calcTileDimensions(canvasWidth: number, canvasHeight: number) {
+        let w = canvasWidth / this.mapWidth;
+        let h = canvasHeight / this.mapHeight;
         return [w, h];
     }
 
-    getTileFromPixelCoord(pixelX, pixelY) {
+    getTileFromPixelCoord(pixelX: number, pixelY: number) {
         let [tileX, tileY] = [
             this.getTileXFromCoord(pixelX),
             this.getTileYFromCoord(pixelY),
@@ -105,13 +114,13 @@ class TilemapPixelData {
         return [tileX, tileY];
     }
 
-    getTileXFromCoord(pixelX) {
+    getTileXFromCoord(pixelX: number) {
         return Math.floor(pixelX / this.tileWidth);
     }
 
-    getTileYFromCoord(pixelY) {
+    getTileYFromCoord(pixelY: number) {
         return Math.floor(pixelY / this.tileHeight);
     }
 }
 
-export default TilemapPixelData;
+export default TilemapPixel;

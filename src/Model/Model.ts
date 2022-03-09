@@ -3,7 +3,7 @@ import Wall from "./Entities/Wall";
 import StartPoint from "./Entities/StartPoint";
 import EndPoint from "./Entities/EndPoint";
 import Search from "./Search";
-import Tile from "./Tile";
+import TilePixel from "../View/TilePixel";
 
 class Model {
     tilemap: Tilemap;
@@ -41,7 +41,7 @@ class Model {
         this.tilemap.toggleWallAtTile(tileX, tileY);
     }
 
-    setupObservers(viewTiles: Tile[][]) {
+    setupObservers(viewTiles: TilePixel[][]) {
         this.tilemap.setupObservers(viewTiles);
     }
 

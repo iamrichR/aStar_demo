@@ -1,3 +1,4 @@
+import TilePixel from "../View/TilePixel";
 import Entity from "./Entities/Entity";
 import Tile from "./Tile";
 
@@ -82,7 +83,7 @@ class Tilemap {
         return true;
     }
 
-    setupObservers(viewTiles: Tile[][]) {
+    setupObservers(viewTiles: TilePixel[][]) {
         this.grid.forEach((column, tileX) => {
             column.forEach((cell, tileY) => {
                 cell.subscribe(viewTiles[tileX][tileY]);
