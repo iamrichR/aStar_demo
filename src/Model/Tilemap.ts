@@ -1,12 +1,17 @@
+import Entity from "./Entities/Entity";
 import Tile from "./Tile";
 
 class Tilemap {
-    constructor(mapDetails) {
+    width: number;
+    height: number;
+    grid: Tile[][];
+
+    constructor(mapDetails: { dimensions: number[] }) {
         [this.width, this.height] = mapDetails.dimensions;
         this.grid = this.buildGrid();
     }
 
-    getTile(x, y) {
+    getTile(x: number, y: number) {
         if (this.isInBounds(x, y)) {
             return this.grid[x][y];
         } else {
@@ -14,9 +19,9 @@ class Tilemap {
         }
     }
 
-    getAdjacent(dir, currentTile) {
+    getAdjacent(direction: string, currentTile: Tile) {
         const [currX, currY] = currentTile.getTileCoord();
-        switch (dir.toLowerCase()) {
+        switch (direction.toLowerCase()) {
             case "north":
                 return this.getTile(currX, currY - 1);
                 break;
@@ -33,7 +38,7 @@ class Tilemap {
         return null;
     }
 
-    getDistance(a, b) {
+    getDistance(a: Tile, b: Tile) {
         const [aX, aY] = a.getTileCoord();
         const [bX, bY] = b.getTileCoord();
         const xDistance = Math.abs(aX - bX);
@@ -41,7 +46,7 @@ class Tilemap {
         return xDistance + yDistance;
     }
 
-    getAllAdjacentTiles(tile) {
+    getAllAdjacentTiles(tile: Tile) {
         return {
             north: this.getAdjacent("north", tile),
             east: this.getAdjacent("east", tile),
@@ -50,7 +55,7 @@ class Tilemap {
         };
     }
 
-    setDimensions(dimensions) {
+    setDimensions(dimensions: number[]) {
         [this.width, this.height] = dimensions;
     }
 
@@ -65,7 +70,7 @@ class Tilemap {
         return grid;
     }
 
-    isInBounds(tileX, tileY) {
+    isInBounds(tileX: number, tileY: number) {
         if (tileX >= this.width || tileX < 0) {
             return false;
         }
@@ -77,7 +82,7 @@ class Tilemap {
         return true;
     }
 
-    setupObservers(viewTiles) {
+    setupObservers(viewTiles: Tile[][]) {
         this.grid.forEach((column, tileX) => {
             column.forEach((cell, tileY) => {
                 cell.subscribe(viewTiles[tileX][tileY]);
@@ -85,13 +90,13 @@ class Tilemap {
         });
     }
 
-    toggleWallAtTile(tileX, tileY) {
+    toggleWallAtTile(tileX: number, tileY: number) {
         if (this.isInBounds(tileX, tileY)) {
             this.grid[tileX][tileY].createWall();
         }
     }
 
-    createEntityAtTile(tileX, tileY, entity) {
+    createEntityAtTile(tileX: number, tileY: number, entity: Entity) {
         this.grid[tileX][tileY].setEntity(entity);
     }
 

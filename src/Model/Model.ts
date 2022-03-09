@@ -3,9 +3,14 @@ import Wall from "./Entities/Wall";
 import StartPoint from "./Entities/StartPoint";
 import EndPoint from "./Entities/EndPoint";
 import Search from "./Search";
+import Tile from "./Tile";
 
 class Model {
-    constructor(mapDetails) {
+    tilemap: Tilemap;
+    isSearching: boolean;
+    lastSearch: Search | null;
+
+    constructor(mapDetails: { dimensions: number[] }) {
         this.tilemap = new Tilemap(mapDetails);
         this.isSearching = false;
         this.lastSearch = null;
@@ -32,11 +37,11 @@ class Model {
         this.tilemap.createEntityAtTile(15, 15, new Wall(0, 0));
     }
 
-    toggleWallAtPoint(tileX, tileY) {
+    toggleWallAtPoint(tileX: number, tileY: number) {
         this.tilemap.toggleWallAtTile(tileX, tileY);
     }
 
-    setupObservers(viewTiles) {
+    setupObservers(viewTiles: Tile[][]) {
         this.tilemap.setupObservers(viewTiles);
     }
 
