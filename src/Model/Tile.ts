@@ -1,7 +1,13 @@
+import Entity from "./Entities/Entity";
 import Wall from "./Entities/Wall";
 
 class Tile {
-    constructor(x, y) {
+    x: number;
+    y: number;
+    entity: Entity | null;
+    observers: any[];
+
+    constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
         this.entity = null;
@@ -9,7 +15,7 @@ class Tile {
     }
 
     toggleWall() {
-        if (typeof this.entity == Wall) {
+        if (this.entity != null && this.entity.getEntityType() == "Wall") {
             this.removeEntity();
         } else {
             this.createWall();
@@ -23,7 +29,7 @@ class Tile {
         this.notifyObservers();
     }
 
-    setEntity(entity) {
+    setEntity(entity: Entity) {
         entity.setX(this.x);
         entity.setY(this.y);
         this.entity = entity;
@@ -51,15 +57,13 @@ class Tile {
         };
     }
 
-    subscribe(observer) {
+    subscribe(observer: any) {
         this.observers.push(observer);
     }
 
-    unsubscribe(observer) {
+    unsubscribe(observer: any) {
         let idx = this.observers.indexOf(observer);
-        if (idx >= 0 && idx < this.observers.idx) {
-            this.observers.splice(idx, 1);
-        }
+        if (idx != -1) this.observers.splice(idx, 1);
     }
 }
 

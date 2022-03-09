@@ -1,40 +1,44 @@
 import SearchPath from "./SearchPath";
+import Tile from "./Tile";
+import { Tilemap } from "./Tilemap";
 
 class Search {
+    path: SearchPath[];
+
     constructor() {
-        this.path = null;
+        this.path = [];
     }
 
     resetPath() {
-        this.path = null;
+        this.path = [];
     }
 
-    simpleTestSearch(start, end, map) {
-        this.resetPath();
-        let complete = false;
-        let currentTile = start;
-        let [coordX, coordY] = start.getTileCoord();
+    // simpleTestSearch(start, end, map) {
+    //     this.resetPath();
+    //     let complete = false;
+    //     let currentTile = start;
+    //     let [coordX, coordY] = start.getTileCoord();
 
-        while (!complete) {
-            if (currentTile == end) {
-                complete = true;
-                continue;
-            }
+    //     while (!complete) {
+    //         if (currentTile == end) {
+    //             complete = true;
+    //             continue;
+    //         }
 
-            currentTile = map[coordX + 1][coordY];
-            [coordX, coordY] = currentTile.getTileCoord();
-            this.path.push("east");
-        }
+    //         currentTile = map[coordX + 1][coordY];
+    //         [coordX, coordY] = currentTile.getTileCoord();
+    //         this.path.push("east");
+    //     }
 
-        return {
-            success: true,
-            start: start.getTileCoord(),
-            end: end.getTileCoord(),
-            path: this.path,
-        };
-    }
+    //     return {
+    //         success: true,
+    //         start: start.getTileCoord(),
+    //         end: end.getTileCoord(),
+    //         path: this.path,
+    //     };
+    // }
 
-    aStarSearch(start, end, map) {
+    aStarSearch(start: Tile, end: Tile, map: Tilemap) {
         this.resetPath();
         let searchComplete = false;
         //currentPath - an array of e/w/n/s directions
@@ -42,14 +46,16 @@ class Search {
         //toConsider - an array of available path choices
         //{tile object, heuristic, cost (num of steps), Fscore}
         //note - cost would just be the (length of the path array - 1)
-        let toConsider = [];
+        let toConsider: SearchPath[] = [];
 
         while (!searchComplete) {
             let currentTile = currentPath.endpoint;
-            let newTiles = Object.values(map.getAllAdjacentTiles(currentTile));
+            let newTiles: Tile[] = Object.values(
+                map.getAllAdjacentTiles(currentTile)
+            );
 
             //TODO - also filter out tiles already in path - including startPoint
-            newTiles.filter((tile) => !toConsider.includes(tile));
+            newTiles.filter((tile: any) => !toConsider.includes(tile));
 
             newTiles.forEach((tile) => {
                 //create SearchPath object
@@ -60,7 +66,8 @@ class Search {
                 //toConsider.push(searchpath obj)
             });
 
-            toConsider = toConsider.concat(newTiles);
+            //TODO - update/fix this
+            //toConsider = toConsider.concat(newTiles);
 
             //moving to a second step in order to test the filter
             /*hold onto this code, because this is how you create a 
@@ -74,8 +81,9 @@ class Search {
             currentTile = currentPath.endpoint;
             newTiles = Object.values(map.getAllAdjacentTiles(currentTile));
 
-            newTiles.filter((tile) => !toConsider.includes(tile));
-            toConsider = toConsider.concat(newTiles);
+            newTiles.filter((tile: any) => !toConsider.includes(tile));
+            //TODO - update/fix this
+            //toConsider = toConsider.concat(newTiles);
             console.log(currentPath);
             console.log(toConsider);
             // !

@@ -1,5 +1,14 @@
+import Tile from "./Tile";
+
 class SearchPath {
-    constructor(directions, start) {
+    directions: string[];
+    startPoint: Tile;
+    endpoint: Tile;
+    heuristic: number;
+    cost: number;
+    fScore: number;
+
+    constructor(directions: string[], start: Tile) {
         this.directions = directions;
         this.startPoint = start;
         this.endpoint = start;
@@ -9,7 +18,7 @@ class SearchPath {
         this.fScore = 0;
     }
 
-    addStep(direction, nextTile, heuristic) {
+    addStep(direction: string, nextTile: Tile, heuristic: number) {
         this.directions.push(direction);
         this.endpoint = nextTile;
         this.cost++;
@@ -22,7 +31,7 @@ class SearchPath {
         this.fScore = this.heuristic - this.cost;
     }
 
-    static copyPath(oldPath) {
+    static copyPath(oldPath: SearchPath) {
         let newPath = new SearchPath(oldPath.directions, oldPath.startPoint);
         newPath.endpoint = oldPath.endpoint;
         newPath.heuristic = oldPath.heuristic;
