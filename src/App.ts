@@ -4,6 +4,9 @@ import Controller from "./Controller";
 //TODO - run p5 in instance mode, instead of global
 
 class App {
+    sketch: p5;
+    controller: Controller;
+
     constructor() {}
 
     setup() {
@@ -16,7 +19,7 @@ class App {
         });
     }
 
-    buildSketch(sketch) {
+    buildSketch(sketch: p5) {
         sketch.setup = () => {
             this.controller.setup(this.sketch);
         };
@@ -27,7 +30,7 @@ class App {
         };
 
         sketch.mousePressed = () => {
-            this.controller.mousePressed(sketch.mouseX, sketch.mouseY, sketch);
+            this.controller.mousePressed(sketch.mouseX, sketch.mouseY);
         };
 
         // ///TODO - implement dynamically changing the display on resize.  Maybe?
@@ -36,10 +39,14 @@ class App {
         // };
     }
 
-    attachButtonEvents(elements) {
-        elements.startButton.addEventListener("click", () => {
-            this.controller.startSearch(this.sketch);
-        });
+    attachButtonEvents(elements: { startButton: HTMLElement | null }) {
+        if (elements.startButton != null) {
+            elements.startButton.addEventListener("click", () => {
+                this.controller.startSearch(this.sketch);
+            });
+        } else {
+            console.log("ERROR:  start button element not found");
+        }
     }
 }
 

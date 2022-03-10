@@ -4,7 +4,7 @@ const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
     context: path.resolve(__dirname, "src"),
-    entry: "./App.js",
+    entry: "./App.ts",
     output: {
         path: path.resolve(__dirname, "dist"),
         library: "App",
