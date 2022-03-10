@@ -107,11 +107,11 @@ class TilemapPixel {
     }
 
     getTileFromPixelCoord(pixelX: number, pixelY: number) {
-        let [tileX, tileY] = [
+        const tileCoords: [number, number] = [
             this.getTileXFromCoord(pixelX),
             this.getTileYFromCoord(pixelY),
         ];
-        return [tileX, tileY];
+        return tileCoords;
     }
 
     getTileXFromCoord(pixelX: number) {

@@ -7,7 +7,8 @@ class View {
     tilemap: TilemapPixel;
 
     constructor(sketch: p5) {
-        this.window = new ViewWindow(sketch);
+        this.window = new ViewWindow();
+        sketch.createCanvas(...this.window.getDimensions());
         this.tilemap = new TilemapPixel(sketch.width, sketch.height);
         sketch.background("#ffffff");
         sketch.ellipseMode(sketch.CORNER);

@@ -4,6 +4,7 @@
         "moduleResolution": "node",
         "noEmit": true,
         "strict": true,
+        "strictPropertyInitialization": false,
         "module": "commonjs",
         "noImplicitAny": true,
         //"allowJs": true,
