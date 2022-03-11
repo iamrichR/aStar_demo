@@ -61,9 +61,9 @@ class Tilemap {
     }
 
     buildGrid() {
-        let grid = [...Array(this.width)].map((column, tileX) => {
+        const grid = [...Array(this.width)].map((column, tileX) => {
             return [...Array(this.height)].map((cell, tileY) => {
-                let newTile = new Tile(tileX, tileY);
+                const newTile = new Tile(tileX, tileY);
                 return newTile;
             });
         });

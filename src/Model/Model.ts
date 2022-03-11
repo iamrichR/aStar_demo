@@ -47,8 +47,8 @@ class Model {
 
     startSearch() {
         this.isSearching = true;
-        let startPoint = this.tilemap.grid[8][12];
-        let goalPoint = this.tilemap.grid[24][12];
+        const startPoint = this.tilemap.grid[8][12];
+        const goalPoint = this.tilemap.grid[24][12];
         // let search = new Search();
         // let searchDetails = search.simpleTestSearch(
         //     startPoint,
@@ -63,8 +63,8 @@ class Model {
 
         // return searchDetails;
 
-        let search = new Search();
-        let searchDetails = search.aStarSearch(
+        const search = new Search();
+        const searchDetails = search.aStarSearch(
             startPoint,
             goalPoint,
             this.tilemap

@@ -1,4 +1,4 @@
-let resolutions = [
+const resolutions = [
     {
         width: 256,
         height: 144,

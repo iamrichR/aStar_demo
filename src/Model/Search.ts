@@ -46,7 +46,7 @@ class Search {
         //toConsider - an array of available path choices
         //{tile object, heuristic, cost (num of steps), Fscore}
         //note - cost would just be the (length of the path array - 1)
-        let toConsider: SearchPath[] = [];
+        const toConsider: SearchPath[] = [];
 
         while (!searchComplete) {
             let currentTile = currentPath.endpoint;
@@ -72,8 +72,8 @@ class Search {
             //moving to a second step in order to test the filter
             /*hold onto this code, because this is how you create a 
               possible next step */
-            let newPath = SearchPath.copyPath(currentPath);
-            let nextTile = map.getAdjacent("north", currentTile);
+            const newPath = SearchPath.copyPath(currentPath);
+            const nextTile = map.getAdjacent("north", currentTile);
             newPath.addStep("north", nextTile, map.getDistance(nextTile, end));
             currentPath = newPath;
 

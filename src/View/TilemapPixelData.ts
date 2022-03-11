@@ -65,9 +65,9 @@ class TilemapPixel {
     }
 
     buildGrid() {
-        let grid = [...Array(this.mapWidth)].map((column, tileX) => {
+        const grid = [...Array(this.mapWidth)].map((column, tileX) => {
             return [...Array(this.mapHeight)].map((cell, tileY) => {
-                let newTile = new TilePixel(
+                const newTile = new TilePixel(
                     tileX,
                     tileY,
                     this.tileWidth,
@@ -101,8 +101,8 @@ class TilemapPixel {
     // }
 
     calcTileDimensions(canvasWidth: number, canvasHeight: number) {
-        let w = canvasWidth / this.mapWidth;
-        let h = canvasHeight / this.mapHeight;
+        const w = canvasWidth / this.mapWidth;
+        const h = canvasHeight / this.mapHeight;
         return [w, h];
     }
 

@@ -32,7 +32,7 @@ class SearchPath {
     }
 
     static copyPath(oldPath: SearchPath) {
-        let newPath = new SearchPath(oldPath.directions, oldPath.startPoint);
+        const newPath = new SearchPath(oldPath.directions, oldPath.startPoint);
         newPath.endpoint = oldPath.endpoint;
         newPath.heuristic = oldPath.heuristic;
         newPath.cost = oldPath.cost;

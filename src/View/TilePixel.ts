@@ -59,24 +59,24 @@ class TilePixel {
     }
 
     drawConsidered(sketch: p5) {
-        let [x, y] = this.getCoord();
+        const [x, y] = this.getCoord();
         sketch.fill("#fad6b1");
         sketch.rect(x, y, this.width, this.height);
     }
 
     drawInPath(sketch: p5) {
         //TODO - draw a vertical or horizontal line, depending on the path
-        let [x, y] = this.getCoord();
+        const [x, y] = this.getCoord();
         //let midX = x + this.width / 2 - 1;
-        let midY = y + this.height / 2 - 1;
+        const midY = y + this.height / 2 - 1;
         sketch.fill("#ff0000");
         sketch.rect(x, midY, this.width, 3);
     }
 
     drawOutline(sketch: p5, fill = "#000000") {
-        let [x, y] = this.getCoord();
-        let dx = x + this.width;
-        let dy = y + this.height;
+        const [x, y] = this.getCoord();
+        const dx = x + this.width;
+        const dy = y + this.height;
         sketch.fill(fill);
         sketch.line(x, y, dx, y);
         sketch.line(x, y, x, dy);
@@ -85,13 +85,13 @@ class TilePixel {
     }
 
     drawFilled(sketch: p5, fill = "#000000") {
-        let [x, y] = this.getCoord();
+        const [x, y] = this.getCoord();
         sketch.fill(fill);
         sketch.rect(x, y, this.width, this.height);
     }
 
     drawEllipse(sketch: p5, fill = "#000000") {
-        let [x, y] = this.getCoord();
+        const [x, y] = this.getCoord();
         sketch.fill(fill);
         sketch.ellipse(x, y, this.width, this.height);
     }

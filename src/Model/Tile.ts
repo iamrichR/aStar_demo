@@ -25,7 +25,7 @@ class Tile {
     }
 
     createWall() {
-        let wall = new Wall(this.x, this.y);
+        const wall = new Wall(this.x, this.y);
         this.entity = wall;
         this.notifyObservers();
     }
@@ -63,7 +63,7 @@ class Tile {
     }
 
     unsubscribe(observer: any) {
-        let idx = this.observers.indexOf(observer);
+        const idx = this.observers.indexOf(observer);
         if (idx != -1) this.observers.splice(idx, 1);
     }
 }
