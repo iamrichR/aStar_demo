@@ -1,41 +1,54 @@
 import Tile from './Tile';
+import { TileStep } from './TileStep';
 
 class SearchPath {
-    directions: string[];
+    steps: TileStep[];
     startPoint: Tile;
-    endpoint: Tile;
     heuristic: number;
-    cost: number;
+    numSteps: number;
     fScore: number;
 
-    constructor(directions: string[], start: Tile) {
-        this.directions = directions;
+    constructor(start: Tile, steps: TileStep[] = []) {
         this.startPoint = start;
-        this.endpoint = start;
+        this.steps = steps;
         //TODO - figure out how to properly represent these values
         this.heuristic = 0;
-        this.cost = 0;
+        this.numSteps = 0;
         this.fScore = 0;
     }
 
-    addStep(direction: string, nextTile: Tile, heuristic: number) {
-        this.directions.push(direction);
-        this.endpoint = nextTile;
-        this.cost++;
+    createAndAddStep(direction: string, tile: Tile, heuristic: number): void {
+        const newStep: TileStep = { direction: direction, tile: tile };
+        this.addStep(newStep, heuristic);
+    }
+
+    addStep(newStep: TileStep, heuristic: number): void {
+        this.steps.push(newStep);
+        this.numSteps++;
         this.heuristic = heuristic;
         this.calculatefScore();
     }
 
+    getEndpoint(): Tile {
+        if (this.steps.length == 0) {
+            return this.startPoint;
+        } else {
+            return this.steps[this.steps.length - 1].tile;
+        }
+    }
+
     calculatefScore() {
         //TODO - figure out what the actual math for this is supposed to be
-        this.fScore = this.heuristic - this.cost;
+        this.fScore = 200 - this.heuristic + this.numSteps;
     }
 
     static copyPath(oldPath: SearchPath) {
-        const newPath = new SearchPath(oldPath.directions, oldPath.startPoint);
-        newPath.endpoint = oldPath.endpoint;
+        const newPath = new SearchPath(
+            oldPath.startPoint,
+            oldPath.steps.slice()
+        );
         newPath.heuristic = oldPath.heuristic;
-        newPath.cost = oldPath.cost;
+        newPath.numSteps = oldPath.numSteps;
         newPath.fScore = oldPath.fScore;
         return newPath;
     }

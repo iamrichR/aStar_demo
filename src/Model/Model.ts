@@ -2,13 +2,14 @@ import Tilemap from './Tilemap';
 import Wall from './Entities/Wall';
 import StartPoint from './Entities/StartPoint';
 import EndPoint from './Entities/EndPoint';
-import Search from './Search';
+import aStarSearch from './Search';
 import TilePixel from '../View/TilePixel';
+import SearchPath from './SearchPath';
 
 class Model {
     tilemap: Tilemap;
     isSearching: boolean;
-    lastSearch: Search | null;
+    lastSearch: SearchPath | null;
 
     constructor(mapDetails: { dimensions: number[] }) {
         this.tilemap = new Tilemap(mapDetails);
@@ -49,26 +50,11 @@ class Model {
         this.isSearching = true;
         const startPoint = this.tilemap.grid[8][12];
         const goalPoint = this.tilemap.grid[24][12];
-        // let search = new Search();
-        // let searchDetails = search.simpleTestSearch(
-        //     startPoint,
-        //     goalPoint,
-        //     this.tilemap.grid
-        // );
-
-        // if (searchDetails.success) {
-        //     this.lastSearch = search;
-        //     this.isSearching = false;
-        // }
 
         // return searchDetails;
+        const searchDetails = aStarSearch(startPoint, goalPoint, this.tilemap);
 
-        const search = new Search();
-        const searchDetails = search.aStarSearch(
-            startPoint,
-            goalPoint,
-            this.tilemap
-        );
+        return searchDetails;
     }
 }
 

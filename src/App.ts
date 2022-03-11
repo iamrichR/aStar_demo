@@ -1,5 +1,6 @@
-import p5 from "p5";
-import Controller from "./Controller";
+import p5 from 'p5';
+import Controller from './Controller';
+import Direction from './Direction';
 
 //TODO - run p5 in instance mode, instead of global
 
@@ -15,7 +16,7 @@ class App {
         });
         this.controller = new Controller();
         this.attachButtonEvents({
-            startButton: document.getElementById("start-btn"),
+            startButton: document.getElementById('start-btn'),
         });
     }
 
@@ -41,16 +42,16 @@ class App {
 
     attachButtonEvents(elements: { startButton: HTMLElement | null }) {
         if (elements.startButton != null) {
-            elements.startButton.addEventListener("click", () => {
+            elements.startButton.addEventListener('click', () => {
                 this.controller.startSearch(this.sketch);
             });
         } else {
-            console.log("ERROR:  start button element not found");
+            console.log('ERROR:  start button element not found');
         }
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
     let app = new App();
     app.setup();
 });

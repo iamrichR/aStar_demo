@@ -1,6 +1,7 @@
 import TilePixel from '../View/TilePixel';
 import Entity from './Entities/Entity';
 import Tile from './Tile';
+import { TileStep, TileStepNullable } from './TileStep';
 
 class Tilemap {
     width: number;
@@ -47,13 +48,33 @@ class Tilemap {
         return xDistance + yDistance;
     }
 
-    getAllAdjacentTiles(tile: Tile) {
-        return {
-            north: this.getAdjacent('north', tile),
-            east: this.getAdjacent('east', tile),
-            west: this.getAdjacent('west', tile),
-            south: this.getAdjacent('south', tile),
-        };
+    getAdjacentTiles(currentTile: Tile): TileStepNullable[] {
+        const adjacentTiles: TileStepNullable[] = [];
+
+        ['north', 'east', 'south', 'west'].forEach((dir) => {
+            const adjacentTile = this.getAdjacent(dir, currentTile);
+            adjacentTiles.push({
+                direction: dir,
+                tile: adjacentTile,
+            });
+        });
+
+        return adjacentTiles;
+    }
+
+    getAdjacentTilesNonNull(currentTile: Tile): TileStep[] {
+        const adjacentTiles: TileStep[] = [];
+
+        this.getAdjacentTiles(currentTile).forEach((step) => {
+            if (step.tile !== null) {
+                adjacentTiles.push({
+                    direction: step.direction,
+                    tile: step.tile,
+                });
+            }
+        });
+
+        return adjacentTiles;
     }
 
     setDimensions(dimensions: number[]) {
