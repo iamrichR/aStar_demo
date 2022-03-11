@@ -7,12 +7,13 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "concurrently \"npm:build\" \"node ./scripts/open.js\"",
-        "build": "npm run build:clean && npm run build:js",
+        "build": "npm run format && npm run build:clean && npm run build:js",
         "build:clean": "node ./scripts/clean.js",
         "build:js": "webpack --watch",
-        "lint": "eslint src/**/*.ts",
+        "format": "npm run prettier:fix && npm run lint:fix",
+        "lint:check": "eslint src/**/*.ts",
         "lint:fix": "eslint src/**/*.ts --fix",
-        "format": "prettier --write src/**/*.ts"
+        "prettier:fix": "prettier --write src/**/*.ts"
     },
     "keywords": [],
     "author": "",
