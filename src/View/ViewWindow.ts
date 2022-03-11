@@ -1,5 +1,5 @@
-import p5 from "p5";
-import resolutions from "./resolutions";
+import p5 from 'p5';
+import resolutions from './resolutions';
 
 class ViewWindow {
     resolutions: { width: number; height: number }[];

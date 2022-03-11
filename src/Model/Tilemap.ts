@@ -1,6 +1,6 @@
-import TilePixel from "../View/TilePixel";
-import Entity from "./Entities/Entity";
-import Tile from "./Tile";
+import TilePixel from '../View/TilePixel';
+import Entity from './Entities/Entity';
+import Tile from './Tile';
 
 class Tilemap {
     width: number;
@@ -23,16 +23,16 @@ class Tilemap {
     getAdjacent(direction: string, currentTile: Tile) {
         const [currX, currY] = currentTile.getTileCoord();
         switch (direction.toLowerCase()) {
-            case "north":
+            case 'north':
                 return this.getTile(currX, currY - 1);
                 break;
-            case "east":
+            case 'east':
                 return this.getTile(currX + 1, currY);
                 break;
-            case "south":
+            case 'south':
                 return this.getTile(currX, currY + 1);
                 break;
-            case "west":
+            case 'west':
                 return this.getTile(currX - 1, currY);
                 break;
         }
@@ -49,10 +49,10 @@ class Tilemap {
 
     getAllAdjacentTiles(tile: Tile) {
         return {
-            north: this.getAdjacent("north", tile),
-            east: this.getAdjacent("east", tile),
-            west: this.getAdjacent("west", tile),
-            south: this.getAdjacent("south", tile),
+            north: this.getAdjacent('north', tile),
+            east: this.getAdjacent('east', tile),
+            west: this.getAdjacent('west', tile),
+            south: this.getAdjacent('south', tile),
         };
     }
 

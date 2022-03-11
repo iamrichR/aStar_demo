@@ -1,6 +1,6 @@
-import SearchPath from "./SearchPath";
-import Tile from "./Tile";
-import { Tilemap } from "./Tilemap";
+import SearchPath from './SearchPath';
+import Tile from './Tile';
+import { Tilemap } from './Tilemap';
 
 class Search {
     path: SearchPath[];
@@ -73,8 +73,8 @@ class Search {
             /*hold onto this code, because this is how you create a 
               possible next step */
             const newPath = SearchPath.copyPath(currentPath);
-            const nextTile = map.getAdjacent("north", currentTile);
-            newPath.addStep("north", nextTile, map.getDistance(nextTile, end));
+            const nextTile = map.getAdjacent('north', currentTile);
+            newPath.addStep('north', nextTile, map.getDistance(nextTile, end));
             currentPath = newPath;
 
             // ! repeated code for testing, delete later

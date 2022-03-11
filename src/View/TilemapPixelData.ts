@@ -1,5 +1,5 @@
-import TilePixel from "./TilePixel";
-import p5 from "p5";
+import TilePixel from './TilePixel';
+import p5 from 'p5';
 
 class TilemapPixel {
     mapWidth: number;
@@ -23,7 +23,7 @@ class TilemapPixel {
         if (this.isInBounds(tileX, tileY)) {
             return this.grid[tileX][tileY];
         } else {
-            console.log("tile value out of bounds:  ", tileX, tileY);
+            console.log('tile value out of bounds:  ', tileX, tileY);
             return null;
         }
     }
@@ -31,16 +31,16 @@ class TilemapPixel {
     getAdjacent(direction: string, currentTile: TilePixel) {
         const [currX, currY] = currentTile.getTileCoord();
         switch (direction.toLowerCase()) {
-            case "north":
+            case 'north':
                 return this.getTile(currX, currY - 1);
                 break;
-            case "east":
+            case 'east':
                 return this.getTile(currX + 1, currY);
                 break;
-            case "south":
+            case 'south':
                 return this.getTile(currX, currY + 1);
                 break;
-            case "west":
+            case 'west':
                 return this.getTile(currX - 1, currY);
                 break;
         }

@@ -1,9 +1,9 @@
-import Tilemap from "./Tilemap";
-import Wall from "./Entities/Wall";
-import StartPoint from "./Entities/StartPoint";
-import EndPoint from "./Entities/EndPoint";
-import Search from "./Search";
-import TilePixel from "../View/TilePixel";
+import Tilemap from './Tilemap';
+import Wall from './Entities/Wall';
+import StartPoint from './Entities/StartPoint';
+import EndPoint from './Entities/EndPoint';
+import Search from './Search';
+import TilePixel from '../View/TilePixel';
 
 class Model {
     tilemap: Tilemap;

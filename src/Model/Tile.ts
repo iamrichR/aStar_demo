@@ -1,6 +1,6 @@
-import TilePixel from "../View/TilePixel";
-import Entity from "./Entities/Entity";
-import Wall from "./Entities/Wall";
+import TilePixel from '../View/TilePixel';
+import Entity from './Entities/Entity';
+import Wall from './Entities/Wall';
 
 class Tile {
     x: number;
@@ -16,7 +16,7 @@ class Tile {
     }
 
     toggleWall() {
-        if (this.entity != null && this.entity.getEntityType() == "Wall") {
+        if (this.entity != null && this.entity.getEntityType() == 'Wall') {
             this.removeEntity();
         } else {
             this.createWall();

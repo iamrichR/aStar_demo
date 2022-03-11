@@ -1,6 +1,6 @@
-import ViewWindow from "./ViewWindow";
-import TilemapPixel from "./TilemapPixelData";
-import p5 from "p5";
+import ViewWindow from './ViewWindow';
+import TilemapPixel from './TilemapPixelData';
+import p5 from 'p5';
 
 class View {
     window: ViewWindow;
@@ -10,7 +10,7 @@ class View {
         this.window = new ViewWindow();
         sketch.createCanvas(...this.window.getDimensions());
         this.tilemap = new TilemapPixel(sketch.width, sketch.height);
-        sketch.background("#ffffff");
+        sketch.background('#ffffff');
         sketch.ellipseMode(sketch.CORNER);
     }
 
@@ -39,7 +39,7 @@ class View {
     }
 
     draw(sketch: p5) {
-        sketch.background("#ffffff");
+        sketch.background('#ffffff');
         this.tilemap.draw(sketch);
     }
 
