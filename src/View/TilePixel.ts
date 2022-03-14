@@ -1,35 +1,29 @@
 import Entity from '../Model/Entities/Entity';
 import p5 from 'p5';
+import Tile from '../Superclasses/Tile';
 
-class TilePixel {
+class TilePixel extends Tile {
     tileX: number;
     tileY: number;
     coordX: number;
     coordY: number;
     width: number;
     height: number;
-    entityStr: string;
     considered: boolean;
     inPath: boolean;
 
     constructor(tileX: number, tileY: number, width: number, height: number) {
-        this.tileX = tileX;
-        this.tileY = tileY;
+        super(tileX, tileY);
         this.coordX = tileX * width;
         this.coordY = tileY * height;
         this.width = width;
         this.height = height;
-        this.entityStr = '';
         this.considered = false;
         this.inPath = false;
     }
 
-    getCoord() {
+    getPixelCoord() {
         return [this.coordX, this.coordY];
-    }
-
-    getTileCoord() {
-        return [this.tileX, this.tileY];
     }
 
     notify(stateObj: { entity: Entity | null }) {
@@ -40,8 +34,8 @@ class TilePixel {
         this.drawOutline(sketch);
         if (this.considered) this.drawConsidered(sketch);
         if (this.inPath) this.drawInPath(sketch);
-        if (this.entityStr.length > 0) {
-            switch (this.entityStr.toLowerCase()) {
+        if (this.entity) {
+            switch (this.entity.getEntityType().toLowerCase()) {
                 case 'wall':
                     this.drawFilled(sketch);
                     break;
@@ -59,14 +53,14 @@ class TilePixel {
     }
 
     drawConsidered(sketch: p5) {
-        const [x, y] = this.getCoord();
+        const [x, y] = this.getPixelCoord();
         sketch.fill('#fad6b1');
         sketch.rect(x, y, this.width, this.height);
     }
 
     drawInPath(sketch: p5) {
         //TODO - draw a vertical or horizontal line, depending on the path
-        const [x, y] = this.getCoord();
+        const [x, y] = this.getPixelCoord();
         //let midX = x + this.width / 2 - 1;
         const midY = y + this.height / 2 - 1;
         sketch.fill('#ff0000');
@@ -74,7 +68,7 @@ class TilePixel {
     }
 
     drawOutline(sketch: p5, fill = '#000000') {
-        const [x, y] = this.getCoord();
+        const [x, y] = this.getPixelCoord();
         const dx = x + this.width;
         const dy = y + this.height;
         sketch.fill(fill);
@@ -85,23 +79,21 @@ class TilePixel {
     }
 
     drawFilled(sketch: p5, fill = '#000000') {
-        const [x, y] = this.getCoord();
+        const [x, y] = this.getPixelCoord();
         sketch.fill(fill);
         sketch.rect(x, y, this.width, this.height);
     }
 
     drawEllipse(sketch: p5, fill = '#000000') {
-        const [x, y] = this.getCoord();
+        const [x, y] = this.getPixelCoord();
         sketch.fill(fill);
         sketch.ellipse(x, y, this.width, this.height);
     }
 
-    updateState(stateObj: { entity: Entity | null }) {
-        if (stateObj.entity == null) {
-            this.entityStr = '';
-        } else {
-            this.entityStr = stateObj.entity.getEntityType();
-        }
+    //todo: probably make a "TileState" interface or something
+    //todo: do something here
+    updateState(stateObj: any) {
+        this.entity = stateObj.entity;
     }
 }
 

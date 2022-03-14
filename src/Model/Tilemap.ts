@@ -1,12 +1,12 @@
 import TilePixel from '../View/TilePixel';
 import Entity from './Entities/Entity';
-import Tile from './Tile';
+import TileModel from './TileModel';
 import { TileStep, TileStepNullable } from './TileStep';
 
 class Tilemap {
     width: number;
     height: number;
-    grid: Tile[][];
+    grid: TileModel[][];
 
     constructor(mapDetails: { dimensions: number[] }) {
         [this.width, this.height] = mapDetails.dimensions;
@@ -21,7 +21,7 @@ class Tilemap {
         }
     }
 
-    getAdjacent(direction: string, currentTile: Tile) {
+    getAdjacent(direction: string, currentTile: TileModel) {
         const [currX, currY] = currentTile.getTileCoord();
         switch (direction.toLowerCase()) {
             case 'north':
@@ -40,7 +40,7 @@ class Tilemap {
         return null;
     }
 
-    getDistance(a: Tile, b: Tile) {
+    getDistance(a: TileModel, b: TileModel) {
         const [aX, aY] = a.getTileCoord();
         const [bX, bY] = b.getTileCoord();
         const xDistance = Math.abs(aX - bX);
@@ -48,7 +48,7 @@ class Tilemap {
         return xDistance + yDistance;
     }
 
-    getAdjacentTiles(currentTile: Tile): TileStepNullable[] {
+    getAdjacentTiles(currentTile: TileModel): TileStepNullable[] {
         const adjacentTiles: TileStepNullable[] = [];
 
         ['north', 'east', 'south', 'west'].forEach((dir) => {
@@ -62,7 +62,7 @@ class Tilemap {
         return adjacentTiles;
     }
 
-    getAdjacentTilesNonNull(currentTile: Tile): TileStep[] {
+    getAdjacentTilesNonNull(currentTile: TileModel): TileStep[] {
         const adjacentTiles: TileStep[] = [];
 
         this.getAdjacentTiles(currentTile).forEach((step) => {
@@ -84,7 +84,7 @@ class Tilemap {
     buildGrid() {
         const grid = [...Array(this.width)].map((column, tileX) => {
             return [...Array(this.height)].map((cell, tileY) => {
-                const newTile = new Tile(tileX, tileY);
+                const newTile = new TileModel(tileX, tileY);
                 return newTile;
             });
         });

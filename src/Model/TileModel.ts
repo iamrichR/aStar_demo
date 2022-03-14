@@ -1,17 +1,16 @@
+import Tile from '../Superclasses/Tile';
 import TilePixel from '../View/TilePixel';
 import Entity from './Entities/Entity';
 import Wall from './Entities/Wall';
 
-class Tile {
-    x: number;
-    y: number;
+class TileModel extends Tile {
+    tileX: number;
+    tileY: number;
     entity: Entity | null;
     observers: TilePixel[];
 
-    constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
-        this.entity = null;
+    constructor(tileX: number, tileY: number) {
+        super(tileX, tileY);
         this.observers = [];
     }
 
@@ -25,14 +24,14 @@ class Tile {
     }
 
     createWall() {
-        const wall = new Wall(this.x, this.y);
+        const wall = new Wall(this.tileX, this.tileY);
         this.entity = wall;
         this.notifyObservers();
     }
 
     setEntity(entity: Entity) {
-        entity.setX(this.x);
-        entity.setY(this.y);
+        entity.setX(this.tileX);
+        entity.setY(this.tileY);
         this.entity = entity;
         this.notifyObservers();
     }
@@ -46,10 +45,6 @@ class Tile {
         this.observers.forEach((obs) => {
             obs.notify(this.getState());
         });
-    }
-
-    getTileCoord() {
-        return [this.x, this.y];
     }
 
     getState() {
@@ -68,4 +63,4 @@ class Tile {
     }
 }
 
-export default Tile;
+export default TileModel;

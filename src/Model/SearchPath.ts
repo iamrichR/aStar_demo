@@ -1,14 +1,14 @@
-import Tile from './Tile';
+import TileModel from './TileModel';
 import { TileStep } from './TileStep';
 
 class SearchPath {
     steps: TileStep[];
-    startPoint: Tile;
+    startPoint: TileModel;
     heuristic: number;
     numSteps: number;
     fScore: number;
 
-    constructor(start: Tile, steps: TileStep[] = []) {
+    constructor(start: TileModel, steps: TileStep[] = []) {
         this.startPoint = start;
         this.steps = steps;
         //TODO - figure out how to properly represent these values
@@ -17,7 +17,11 @@ class SearchPath {
         this.fScore = 0;
     }
 
-    createAndAddStep(direction: string, tile: Tile, heuristic: number): void {
+    createAndAddStep(
+        direction: string,
+        tile: TileModel,
+        heuristic: number
+    ): void {
         const newStep: TileStep = { direction: direction, tile: tile };
         this.addStep(newStep, heuristic);
     }
@@ -29,7 +33,7 @@ class SearchPath {
         this.calculatefScore();
     }
 
-    getEndpoint(): Tile {
+    getEndpoint(): TileModel {
         if (this.steps.length == 0) {
             return this.startPoint;
         } else {

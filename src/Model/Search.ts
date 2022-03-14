@@ -1,9 +1,10 @@
 import SearchPath from './SearchPath';
-import Tile from './Tile';
+import TileModel from './TileModel';
 import Tilemap from './Tilemap';
 import { TileStep } from './TileStep';
 
-function aStarSearch(start: Tile, end: Tile, map: Tilemap) {
+function aStarSearch(start: TileModel, end: TileModel, map: Tilemap) {
+    console.log('searching...');
     let searchComplete = false;
 
     const toConsider: SearchPath[] = [new SearchPath(start)];
@@ -65,7 +66,7 @@ function aStarSearch(start: Tile, end: Tile, map: Tilemap) {
     }
 
     toConsider.forEach((path) => {
-        console.log(path.steps);
+        // console.log(path.steps);
     });
 }
 
