@@ -66,7 +66,7 @@ function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
     }
 
     toConsider.forEach((path) => {
-        // console.log(path.steps);
+        console.log(path.steps);
     });
 }
 
