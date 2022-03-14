@@ -1,14 +1,18 @@
 import TilePixel from './TilePixel';
 import p5 from 'p5';
+import Tilemap from '../Superclasses/Tilemap';
 
-class TilemapPixel {
+class TilemapPixel extends Tilemap {
     mapWidth: number;
     mapHeight: number;
     tileWidth: number;
     tileHeight: number;
+    canvasWidth: number;
+    canvasHeight: number;
     grid: TilePixel[][];
 
     constructor(canvasWidth: number, canvasHeight: number) {
+        super();
         //width 32 x height 24
         this.mapWidth = 32;
         this.mapHeight = 24;
@@ -16,38 +20,9 @@ class TilemapPixel {
             canvasWidth,
             canvasHeight
         );
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
         this.grid = this.buildGrid();
-    }
-
-    getTile(tileX: number, tileY: number) {
-        if (this.isInBounds(tileX, tileY)) {
-            return this.grid[tileX][tileY];
-        } else {
-            console.log('tile value out of bounds:  ', tileX, tileY);
-            return null;
-        }
-    }
-
-    getAdjacent(direction: string, currentTile: TilePixel) {
-        const [currX, currY] = currentTile.getTileCoord();
-        switch (direction.toLowerCase()) {
-            case 'north':
-                return this.getTile(currX, currY - 1);
-                break;
-            case 'east':
-                return this.getTile(currX + 1, currY);
-                break;
-            case 'south':
-                return this.getTile(currX, currY + 1);
-                break;
-            case 'west':
-                return this.getTile(currX - 1, currY);
-                break;
-        }
-    }
-
-    getTileDimensions() {
-        return [this.mapWidth, this.mapHeight];
     }
 
     getMapDetails() {
@@ -80,18 +55,6 @@ class TilemapPixel {
         return grid;
     }
 
-    isInBounds(tileX: number, tileY: number) {
-        if (tileX >= this.mapWidth || tileX < 0) {
-            return false;
-        }
-
-        if (tileY >= this.mapHeight || tileY < 0) {
-            return false;
-        }
-
-        return true;
-    }
-
     // updateMap(modelGrid:Tile[][]) {
     //     for (let x = 0; x < modelGrid.length; x++) {
     //         for (let y = 0; y < modelGrid[x].length; y++) {
@@ -108,17 +71,17 @@ class TilemapPixel {
 
     getTileFromPixelCoord(pixelX: number, pixelY: number) {
         const tileCoords: [number, number] = [
-            this.getTileXFromCoord(pixelX),
-            this.getTileYFromCoord(pixelY),
+            this.getTileXFromPixelCoord(pixelX),
+            this.getTileYFromPixelCoord(pixelY),
         ];
         return tileCoords;
     }
 
-    getTileXFromCoord(pixelX: number) {
+    getTileXFromPixelCoord(pixelX: number) {
         return Math.floor(pixelX / this.tileWidth);
     }
 
-    getTileYFromCoord(pixelY: number) {
+    getTileYFromPixelCoord(pixelY: number) {
         return Math.floor(pixelY / this.tileHeight);
     }
 }

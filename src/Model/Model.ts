@@ -1,4 +1,4 @@
-import Tilemap from './Tilemap';
+import TilemapModel from './TilemapModel';
 import Wall from './Entities/Wall';
 import StartPoint from './Entities/StartPoint';
 import EndPoint from './Entities/EndPoint';
@@ -7,12 +7,12 @@ import TilePixel from '../View/TilePixel';
 import SearchPath from './SearchPath';
 
 class Model {
-    tilemap: Tilemap;
+    tilemap: TilemapModel;
     isSearching: boolean;
     lastSearch: SearchPath | null;
 
     constructor(mapDetails: { dimensions: number[] }) {
-        this.tilemap = new Tilemap(mapDetails);
+        this.tilemap = new TilemapModel(mapDetails);
         this.isSearching = false;
         this.lastSearch = null;
     }

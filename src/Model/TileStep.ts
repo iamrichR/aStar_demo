@@ -1,13 +1,13 @@
-import TileModel from './TileModel';
+import Tile from '../Superclasses/Tile';
 
 interface TileStep {
     direction: string;
-    tile: TileModel;
+    tile: Tile;
 }
 
 interface TileStepNullable {
     direction: string;
-    tile: TileModel | null;
+    tile: Tile | null;
 }
 
 export { TileStep, TileStepNullable };

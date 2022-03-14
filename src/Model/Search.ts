@@ -1,9 +1,9 @@
 import SearchPath from './SearchPath';
 import TileModel from './TileModel';
-import Tilemap from './Tilemap';
+import TilemapModel from './TilemapModel';
 import { TileStep } from './TileStep';
 
-function aStarSearch(start: TileModel, end: TileModel, map: Tilemap) {
+function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
     console.log('searching...');
     let searchComplete = false;
 
