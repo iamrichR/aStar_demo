@@ -1,5 +1,5 @@
 {
-    "name": "aStar_demo",
+    "name": "astar_demo",
     "version": "1.0.0",
     "description": "demo of the A* pathfinding algorithm",
     "private": true,
@@ -7,7 +7,9 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "concurrently \"npm:build\" \"node ./scripts/open.js\"",
+        "start:noformat": "concurrently \"npm:build:noformat\" \"node ./scripts/open.js\"",
         "build": "npm run format && npm run build:clean && npm run build:js",
+        "build:noformat": "npm run build:clean && npm run build:js",
         "build:clean": "node ./scripts/clean.js",
         "build:js": "webpack --watch",
         "format": "npm run prettier:fix && npm run lint:fix",

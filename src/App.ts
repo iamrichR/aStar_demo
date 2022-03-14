@@ -1,6 +1,5 @@
 import p5 from 'p5';
 import Controller from './Controller';
-import Direction from './Direction';
 
 //TODO - run p5 in instance mode, instead of global
 
@@ -8,7 +7,7 @@ class App {
     sketch: p5;
     controller: Controller;
 
-    constructor() {}
+    // constructor() {}
 
     setup() {
         this.sketch = new p5((sketch) => {
@@ -52,6 +51,6 @@ class App {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    let app = new App();
+    const app = new App();
     app.setup();
 });

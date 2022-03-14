@@ -23,20 +23,20 @@ class Entity {
         this.y = y;
     }
 
-    move(direction: string, magnitude: number = 1) {
+    move(direction: string, magnitude = 1) {
         let yDirection = 0;
         let xDirection = 0;
         switch (direction.toUpperCase()) {
-            case "UP":
+            case 'UP':
                 yDirection = -1;
                 break;
-            case "DOWN":
+            case 'DOWN':
                 yDirection = 1;
                 break;
-            case "LEFT":
+            case 'LEFT':
                 xDirection = -1;
                 break;
-            case "RIGHT":
+            case 'RIGHT':
                 xDirection = 1;
                 break;
         }

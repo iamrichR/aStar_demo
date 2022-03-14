@@ -1,6 +1,6 @@
-import View from "./View/View";
-import Model from "./Model/Model";
-import p5 from "p5";
+import View from './View/View';
+import Model from './Model/Model';
+import p5 from 'p5';
 
 // ? should app and controller be merged?
 
@@ -8,7 +8,7 @@ class Controller {
     view: View;
     model: Model;
 
-    constructor() {}
+    // constructor() {}
 
     /*
     all this stuff has to be initialized outside of the constuctor 
@@ -25,7 +25,7 @@ class Controller {
 
     startSearch(sketch: p5) {
         if (!this.model.isSearching) {
-            let searchDetails = this.model.startSearch();
+            const searchDetails = this.model.startSearch();
 
             //TODO - you shouldn't need to activate anything in view to update map
             //just make use of the tile observers to update search details

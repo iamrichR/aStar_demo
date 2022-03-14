@@ -10,10 +10,10 @@ function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
     const toConsider: SearchPath[] = [new SearchPath(start)];
     const alreadyConsidered: SearchPath[] = [];
 
-    const currentPath: SearchPath = new SearchPath(start);
+    let currentPath: SearchPath = new SearchPath(start);
 
     //! testing
-    let i = 0;
+    const i = 0;
     //!
 
     while (!searchComplete) {
@@ -30,6 +30,8 @@ function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
 
             //ensure that a given tile hasn't already been checked
             let pathIsNew = true;
+
+            //TODO - make sure new tile isn't already in the path
 
             //this is slow, but the tilemaps aren't big so it should be fine
             toConsider.forEach((existingPath) => {
@@ -50,28 +52,45 @@ function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
             }
         });
 
-        //! this is for testing purposes, delete later
-        //TODO - this code is how to move forward to new step, wrap it in a function or smth
-        if (i == 0) {
-            currentPath.addStep(
-                toConsider[2].steps.slice(-1)[0],
-                map.getDistance(toConsider[2].getEndpoint(), end)
-            );
-            toConsider.splice(2, 1);
-            i++;
-            currentPath.getEndpoint().setInPath(true);
-            currentPath.getEndpoint().setConsidered(false);
-        } else {
+        let bestScore = 0;
+        let bestScoreIdx = 0;
+
+        toConsider.forEach((path, idx) => {
+            if (path.fScore > bestScore) {
+                bestScore = path.fScore;
+                bestScoreIdx = idx;
+            }
+        });
+
+        currentPath = assignNewPath(
+            toConsider,
+            currentPath,
+            toConsider[bestScoreIdx],
+            bestScoreIdx
+        );
+
+        if (currentPath.getEndpoint() == end) {
+            console.log(currentPath.steps);
             searchComplete = true;
         }
-        //!
-
-        // searchComplete = true;
     }
 
-    toConsider.forEach((path) => {
-        console.log(path);
-    });
+    // toConsider.forEach((path) => {
+    //     console.log(path.steps);
+    // });
+}
+
+function assignNewPath(
+    toConsider: SearchPath[],
+    currentPath: SearchPath,
+    newPath: SearchPath,
+    idx: number
+): SearchPath {
+    currentPath = newPath;
+    toConsider.splice(idx, 1);
+    currentPath.getEndpoint().setInPath(true);
+    currentPath.getEndpoint().setConsidered(false);
+    return currentPath;
 }
 
 export default aStarSearch;
