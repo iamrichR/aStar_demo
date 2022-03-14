@@ -1,16 +1,18 @@
 import Entity from '../Model/Entities/Entity';
 import p5 from 'p5';
 import Tile from '../Superclasses/Tile';
+import { TileState } from '../Interfaces/TileUtilities';
 
 class TilePixel extends Tile {
     tileX: number;
     tileY: number;
+    entity: Entity | null;
+    considered: boolean;
+    inPath: boolean;
     coordX: number;
     coordY: number;
     width: number;
     height: number;
-    considered: boolean;
-    inPath: boolean;
 
     constructor(tileX: number, tileY: number, width: number, height: number) {
         super(tileX, tileY);
@@ -18,16 +20,14 @@ class TilePixel extends Tile {
         this.coordY = tileY * height;
         this.width = width;
         this.height = height;
-        this.considered = false;
-        this.inPath = false;
     }
 
     getPixelCoord() {
         return [this.coordX, this.coordY];
     }
 
-    notify(stateObj: { entity: Entity | null }) {
-        this.updateState(stateObj);
+    notify(modelState: TileState) {
+        this.updateState(modelState);
     }
 
     draw(sketch: p5) {
@@ -90,10 +90,10 @@ class TilePixel extends Tile {
         sketch.ellipse(x, y, this.width, this.height);
     }
 
-    //todo: probably make a "TileState" interface or something
-    //todo: do something here
-    updateState(stateObj: any) {
-        this.entity = stateObj.entity;
+    updateState(modelState: TileState) {
+        this.entity = modelState.entity;
+        this.considered = modelState.considered;
+        this.inPath = modelState.inPath;
     }
 }
 

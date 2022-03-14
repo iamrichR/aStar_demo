@@ -1,5 +1,5 @@
 import TileModel from './TileModel';
-import { TileStep } from './TileStep';
+import { TileStep } from '../Interfaces/TileUtilities';
 
 class SearchPath {
     steps: TileStep[];

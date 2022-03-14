@@ -1,7 +1,7 @@
 import SearchPath from './SearchPath';
 import TileModel from './TileModel';
 import TilemapModel from './TilemapModel';
-import { TileStep } from './TileStep';
+import { TileStep } from '../Interfaces/TileUtilities';
 
 function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
     console.log('searching...');

@@ -1,5 +1,6 @@
 import Tile from '../Superclasses/Tile';
 import TilePixel from '../View/TilePixel';
+import { TileState } from '../Interfaces/TileUtilities';
 import Entity from './Entities/Entity';
 import Wall from './Entities/Wall';
 
@@ -7,6 +8,8 @@ class TileModel extends Tile {
     tileX: number;
     tileY: number;
     entity: Entity | null;
+    considered: boolean;
+    inPath: boolean;
     observers: TilePixel[];
 
     constructor(tileX: number, tileY: number) {
@@ -48,9 +51,12 @@ class TileModel extends Tile {
     }
 
     getState() {
-        return {
+        const state: TileState = {
             entity: this.entity,
+            considered: this.considered,
+            inPath: this.inPath,
         };
+        return state;
     }
 
     subscribe(observer: TilePixel) {

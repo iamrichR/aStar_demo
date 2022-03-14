@@ -15,10 +15,6 @@ class Tile {
         this.inPath = false;
     }
 
-    isOccupied() {
-        return this.entity;
-    }
-
     getTileCoord() {
         return [this.tileX, this.tileY];
     }

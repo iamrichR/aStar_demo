@@ -2,7 +2,8 @@ import Tilemap from '../Superclasses/Tilemap';
 import TilePixel from '../View/TilePixel';
 import Entity from './Entities/Entity';
 import TileModel from './TileModel';
-import { TileStep, TileStepNullable } from './TileStep';
+import { TileStep, TileStepNullable } from '../Interfaces/TileUtilities';
+import Tile from '../Superclasses/Tile';
 
 class TilemapModel extends Tilemap {
     mapWidth: number;
@@ -17,6 +18,63 @@ class TilemapModel extends Tilemap {
 
     setDimensions(dimensions: number[]) {
         [this.mapWidth, this.mapHeight] = dimensions;
+    }
+
+    getAdjacent(direction: string, currentTile: TileModel) {
+        const [currX, currY] = currentTile.getTileCoord();
+        switch (direction.toLowerCase()) {
+            case 'north':
+                return this.getTile(currX, currY - 1);
+                break;
+            case 'east':
+                return this.getTile(currX + 1, currY);
+                break;
+            case 'south':
+                return this.getTile(currX, currY + 1);
+                break;
+            case 'west':
+                return this.getTile(currX - 1, currY);
+                break;
+        }
+        return null;
+    }
+
+    getAdjacentTiles(currentTile: TileModel): TileStepNullable[] {
+        const adjacentTiles: TileStepNullable[] = [];
+
+        ['north', 'east', 'south', 'west'].forEach((dir) => {
+            const adjacentTile = this.getAdjacent(dir, currentTile);
+            adjacentTiles.push({
+                direction: dir,
+                tile: adjacentTile,
+            });
+        });
+
+        return adjacentTiles;
+    }
+
+    getAdjacentTilesNonNull(currentTile: TileModel): TileStep[] {
+        const adjacentTiles: TileStep[] = [];
+
+        this.getAdjacentTiles(currentTile).forEach((step) => {
+            if (step.tile !== null) {
+                adjacentTiles.push({
+                    direction: step.direction,
+                    tile: step.tile,
+                });
+            }
+        });
+
+        return adjacentTiles;
+    }
+
+    getTile(tileX: number, tileY: number) {
+        if (this.isInBounds(tileX, tileY)) {
+            return this.grid[tileX][tileY];
+        } else {
+            console.log('tile value out of bounds:  ', tileX, tileY);
+            return null;
+        }
     }
 
     buildGrid() {
