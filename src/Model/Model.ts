@@ -23,7 +23,7 @@ class Model {
 
     createInitialState() {
         //start point in mid-left area
-        this.tilemap.createEntityAtTile(8, 12, new StartPoint(0, 0));
+        // this.tilemap.createEntityAtTile(8, 12, new StartPoint(0, 0));
         //target point in mid-right area
         this.tilemap.createEntityAtTile(24, 12, new EndPoint(0, 0));
         //couple of wall tiles in middle, blocking a straight line path

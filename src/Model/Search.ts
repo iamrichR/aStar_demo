@@ -18,6 +18,7 @@ function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
 
     while (!searchComplete) {
         const currentTile = currentPath.getEndpoint();
+        currentTile.setInPath(true);
         const newTilesToCheck: TileStep[] =
             map.getAdjacentTilesNonNull(currentTile);
 
@@ -45,6 +46,7 @@ function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
 
             if (pathIsNew) {
                 toConsider.push(newPath);
+                newPath.getEndpoint().setConsidered(true);
             }
         });
 
@@ -57,6 +59,8 @@ function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
             );
             toConsider.splice(2, 1);
             i++;
+            currentPath.getEndpoint().setInPath(true);
+            currentPath.getEndpoint().setConsidered(false);
         } else {
             searchComplete = true;
         }
@@ -66,7 +70,7 @@ function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
     }
 
     toConsider.forEach((path) => {
-        console.log(path.steps);
+        console.log(path);
     });
 }
 

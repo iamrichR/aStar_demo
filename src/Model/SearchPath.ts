@@ -43,7 +43,7 @@ class SearchPath {
 
     calculatefScore() {
         //TODO - figure out what the actual math for this is supposed to be
-        this.fScore = 200 - this.heuristic + this.numSteps;
+        this.fScore = 200 - this.heuristic * 1.5 + this.numSteps;
     }
 
     static copyPath(oldPath: SearchPath) {

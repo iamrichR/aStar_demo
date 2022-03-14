@@ -15,6 +15,12 @@ class TileModel extends Tile {
     constructor(tileX: number, tileY: number) {
         super(tileX, tileY);
         this.observers = [];
+        this.inPath = false;
+    }
+
+    setConsidered(bool: boolean) {
+        this.considered = bool;
+        this.notifyObservers();
     }
 
     toggleWall() {
@@ -41,6 +47,11 @@ class TileModel extends Tile {
 
     removeEntity() {
         this.entity = null;
+        this.notifyObservers();
+    }
+
+    setInPath(bool: boolean) {
+        this.inPath = bool;
         this.notifyObservers();
     }
 
