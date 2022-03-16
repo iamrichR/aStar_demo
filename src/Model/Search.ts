@@ -19,11 +19,21 @@ function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
     while (!searchComplete) {
         const currentTile = currentPath.getEndpoint();
         currentTile.setInPath(true);
-        const newTilesToCheck: TileStep[] =
-            map.getAdjacentTilesNonNull(currentTile);
+        const newTilesToCheck: TileStep[] = map
+            .getAdjacentTilesNonNull(currentTile)
+            .filter((step) => {
+                return (
+                    step.tile.entity === null ||
+                    step.tile.entity.getEntityType() !== 'Wall'
+                );
+            });
 
         //iterate through adjacent tiles from current step
         newTilesToCheck.forEach((step) => {
+            // if (
+            //     step.tile.entity == null ||
+            //     !(step.tile.entity.getEntityType() != 'Wall')
+            // ) {
             //create a new path from an adjacent tile
             const newPath = SearchPath.copyPath(currentPath);
             newPath.addStep(step, map.getDistance(step.tile, end));
@@ -50,6 +60,7 @@ function aStarSearch(start: TileModel, end: TileModel, map: TilemapModel) {
                 toConsider.push(newPath);
                 newPath.getEndpoint().setConsidered(true);
             }
+            // }
         });
 
         let bestScore = 0;
@@ -86,6 +97,12 @@ function assignNewPath(
     newPath: SearchPath,
     idx: number
 ): SearchPath {
+    currentPath.steps.forEach((step) => {
+        step.tile.inPath == false;
+    });
+    newPath.steps.forEach((step) => {
+        step.tile.inPath == true;
+    });
     currentPath = newPath;
     toConsider.splice(idx, 1);
     currentPath.getEndpoint().setInPath(true);
