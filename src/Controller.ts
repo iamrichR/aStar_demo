@@ -23,15 +23,15 @@ class Controller {
         //this.model.tilemap.checkerboard();
     }
 
-    startSearch(sketch: p5) {
+    startSearch() {
         if (!this.model.isSearching) {
-            const searchDetails = this.model.startSearch();
+            this.model.startSearch();
+        }
+    }
 
-            //TODO - you shouldn't need to activate anything in view to update map
-            //just make use of the tile observers to update search details
-            //this.view.animateSearch(sketch, searchDetails);
-
-            //TODO - have something optional in view that can slow down and animate search
+    continueSearch() {
+        if (this.model.isSearching) {
+            this.model.continueSearch();
         }
     }
 

@@ -16,6 +16,7 @@ class App {
         this.controller = new Controller();
         this.attachButtonEvents({
             startButton: document.getElementById('start-btn'),
+            nextButton: document.getElementById('next-btn'),
         });
     }
 
@@ -39,10 +40,20 @@ class App {
         // };
     }
 
-    attachButtonEvents(elements: { startButton: HTMLElement | null }) {
+    attachButtonEvents(elements: {
+        startButton: HTMLElement | null;
+        nextButton: HTMLElement | null;
+    }) {
         if (elements.startButton != null) {
             elements.startButton.addEventListener('click', () => {
-                this.controller.startSearch(this.sketch);
+                this.controller.startSearch();
+            });
+        } else {
+            console.log('ERROR:  start button element not found');
+        }
+        if (elements.nextButton != null) {
+            elements.nextButton.addEventListener('click', () => {
+                this.controller.continueSearch();
             });
         } else {
             console.log('ERROR:  start button element not found');

@@ -1,10 +1,12 @@
 class Entity {
     x: number;
     y: number;
+    isPassable: boolean;
 
     constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
+        this.isPassable = false;
     }
 
     getPosition() {
