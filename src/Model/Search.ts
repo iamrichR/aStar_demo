@@ -125,9 +125,24 @@ class Searcher {
         this.getAdjacentTiles().forEach((step) => {
             step.tile.setConsidered(true);
         });
-        this.currentPath.steps.forEach((step) => {
+        this.currentPath.steps.forEach((step, stepIdx) => {
             step.tile.setConsidered(false);
-            step.tile.setInPath(true);
+            console.log(step);
+            let entranceDir = '';
+            //exit direction of the previous tile gets inverted
+            //probably a better way to do this
+            if (stepIdx - 1 >= 0) {
+                const prevDir = this.currentPath.steps[stepIdx - 1].direction;
+                if (prevDir == 'north') entranceDir = 'south';
+                if (prevDir == 'east') entranceDir = 'west';
+                if (prevDir == 'south') entranceDir = 'north';
+                if (prevDir == 'west') entranceDir = 'east';
+            }
+            // let exitDir = '';
+            // if (stepIdx + 1 < this.currentPath.steps.length) {
+            //     exitDir = this.currentPath.steps[stepIdx + 1].direction;
+            // }
+            step.tile.setInPath(true, entranceDir, step.direction);
         });
     }
 

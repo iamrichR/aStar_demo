@@ -6,6 +6,8 @@ class Tile {
     entity: Entity | null;
     considered: boolean;
     inPath: boolean;
+    inPathEntrance: string;
+    inPathExit: string;
 
     constructor(tileX: number, tileY: number) {
         this.tileX = tileX;
@@ -13,6 +15,8 @@ class Tile {
         this.entity = null;
         this.considered = false;
         this.inPath = false;
+        this.inPathEntrance = '';
+        this.inPathExit = '';
     }
 
     getTileCoord() {

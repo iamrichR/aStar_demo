@@ -58,13 +58,70 @@ class TilePixel extends Tile {
         sketch.rect(x, y, this.width, this.height);
     }
 
-    drawInPath(sketch: p5) {
+    drawInPath(sketch: p5, fill = '#ff0000') {
         //TODO - draw a vertical or horizontal line, depending on the path
-        const [x, y] = this.getPixelCoord();
-        //let midX = x + this.width / 2 - 1;
-        const midY = y + this.height / 2 - 1;
-        sketch.fill('#ff0000');
-        sketch.rect(x, midY, this.width, 3);
+        const [leftEdge, topEdge] = this.getPixelCoord();
+        const horizontalCenter = leftEdge + this.width / 2 - 1;
+        const verticalCenter = topEdge + this.height / 2 - 1;
+        const boxCoords = {
+            leftEdge: leftEdge,
+            topEdge: topEdge,
+            horizontalCenter: horizontalCenter,
+            verticalCenter: verticalCenter,
+        };
+        sketch.fill(fill);
+        this.drawPathDirection(this.inPathEntrance, sketch, boxCoords);
+        this.drawPathDirection(this.inPathExit, sketch, boxCoords);
+    }
+
+    //the "any" here is lazy, but it's not really worth making an interface for this one function
+    //note to self - if I need to draw lines again, refactor this and make a boxCoords function and interface
+    drawPathDirection(direction: string, sketch: p5, boxCoords: any) {
+        const pathWidth = 3;
+        switch (direction) {
+            case 'north': {
+                sketch.rect(
+                    boxCoords.horizontalCenter,
+                    boxCoords.topEdge,
+                    pathWidth,
+                    this.height / 2
+                );
+                break;
+            }
+            case 'east': {
+                sketch.rect(
+                    boxCoords.leftEdge + this.width,
+                    boxCoords.verticalCenter,
+                    -1 * (this.width / 2),
+                    pathWidth
+                );
+                break;
+            }
+            case 'south': {
+                sketch.rect(
+                    boxCoords.horizontalCenter,
+                    boxCoords.topEdge + this.height,
+                    pathWidth,
+                    -1 * (this.height / 2)
+                );
+                break;
+            }
+            case 'west': {
+                sketch.rect(
+                    boxCoords.leftEdge,
+                    boxCoords.verticalCenter,
+                    this.width / 2,
+                    pathWidth
+                );
+                break;
+            }
+            default: {
+                //uncomment for debugging
+                // console.log('path direction empty');
+                // console.log(this);
+                break;
+            }
+        }
     }
 
     drawOutline(sketch: p5, fill = '#000000') {
@@ -94,6 +151,8 @@ class TilePixel extends Tile {
         this.entity = modelState.entity;
         this.considered = modelState.considered;
         this.inPath = modelState.inPath;
+        this.inPathEntrance = modelState.inPathEntrance;
+        this.inPathExit = modelState.inPathExit;
     }
 }
 
