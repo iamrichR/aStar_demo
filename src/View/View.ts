@@ -8,7 +8,8 @@ class View {
 
     constructor(sketch: p5) {
         this.window = new ViewWindow();
-        sketch.createCanvas(...this.window.getDimensions());
+        let cvs = sketch.createCanvas(...this.window.getDimensions());
+        cvs.parent('canvas-container');
         this.tilemap = new TilemapPixel(sketch.width, sketch.height);
         sketch.background('#ffffff');
         sketch.ellipseMode(sketch.CORNER);
