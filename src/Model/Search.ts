@@ -10,6 +10,7 @@ class Searcher {
     toConsider: SearchPath[];
     alreadyConsidered: SearchPath[];
     currentPath: SearchPath;
+    currentTile: TileModel;
     searchComplete: boolean;
     numSteps: number;
 
@@ -20,52 +21,67 @@ class Searcher {
         this.toConsider = [];
         this.alreadyConsidered = [];
         this.currentPath = new SearchPath(start);
+        this.currentTile = this.currentPath.getEndpoint();
         this.searchComplete = false;
         console.log('beginning search...');
         this.numSteps = 0;
     }
 
+    //this is the main search algorithm
+    //each call of this function is one step of the search
+    //each step will end with the selection of a new path
+    //eventually the new path chosen will be the shortest(?) path
+    //between the start and end points.
     aStarSearch_step() {
         console.log(`search step #${this.numSteps}`);
 
-        const currentTile = this.currentPath.getEndpoint();
+        const adjacentTiles: TileStep[] = this.getAdjacentTiles();
 
-        //get all adjacent tiles from current
-        //and filter out out-of-bounds and impassable tiles.
-        const newTilesToCheck: TileStep[] = this.map
-            .getAdjacentTilesNonNull(currentTile)
-            .filter((step) => {
-                return step.tile.entity === null || step.tile.entity.isPassable;
-            });
-
-        //iterate through adjacent tiles from current step
-        newTilesToCheck.forEach((step) => {
-            //create a new path from an adjacent tile
-            const newPath = SearchPath.copyPath(this.currentPath);
-            newPath.addStep(step, this.map.getDistance(step.tile, this.end));
-
-            //ensure that a given tile hasn't already been checked
-            let pathIsNew = true;
-
-            //this is slow, but the tilemaps aren't big so it should be fine
-            this.toConsider.forEach((existingPath) => {
-                if (existingPath.getEndpoint() == newPath.getEndpoint()) {
-                    pathIsNew = false;
-                }
-            });
-
-            this.alreadyConsidered.forEach((closedPath) => {
-                if (closedPath.getEndpoint() == newPath.getEndpoint()) {
-                    pathIsNew = false;
-                }
-            });
+        //iterate through adjacent tiles,
+        //make new paths from them,
+        //and add those paths to the consider list
+        adjacentTiles.forEach((step) => {
+            const pathIsNew = this.isTileNew(step.tile);
 
             if (pathIsNew) {
+                //create a new path from an adjacent tile
+                const newPath = SearchPath.copyPath(this.currentPath);
+                newPath.addStep(
+                    step,
+                    this.map.getDistance(step.tile, this.end)
+                );
+
                 this.toConsider.push(newPath);
-                // newPath.getEndpoint().setConsidered(true);
             }
         });
 
+        //find the path with the best F-score
+        const bestScoreIdx = this.getBestFScoreIdx();
+
+        //that path will now be the new currentPath
+        this.assignNewPath(this.toConsider[bestScoreIdx], bestScoreIdx);
+
+        //clear and re-assign search flags
+        this.setTileSearchFlags();
+
+        //check for completion
+        if (this.currentTile == this.end) {
+            console.log(this.currentPath.steps);
+            this.searchComplete = true;
+        }
+    }
+
+    //get all tiles adjacent to current
+    //and filter out out-of-bounds and impassable tiles.
+    getAdjacentTiles(): TileStep[] {
+        return this.map
+            .getAdjacentTilesNonNull(this.currentTile)
+            .filter((step) => {
+                return step.tile.entity === null || step.tile.entity.isPassable;
+            });
+    }
+
+    getBestFScoreIdx(): number {
         let bestScore = 0;
         let bestScoreIdx = 0;
 
@@ -77,22 +93,37 @@ class Searcher {
             }
         });
 
-        //set new currentPath
-        this.assignNewPath(this.toConsider[bestScoreIdx], bestScoreIdx);
+        return bestScoreIdx;
+    }
 
-        this.setTileSearchFlags();
+    //checks that a new tile isn't already in our lists
+    //TODO - probably need to refactor how i'm handling this "already in list" case
+    isTileNew(tile: TileModel): boolean {
+        let pathIsNew = true;
 
-        //check for completion
-        if (this.currentPath.getEndpoint() == this.end) {
-            console.log(this.currentPath.steps);
-            this.searchComplete = true;
-        }
+        //this is slow, but the tilemaps aren't big so it should be fine
+        this.toConsider.forEach((existingPath) => {
+            if (existingPath.getEndpoint() == tile) {
+                pathIsNew = false;
+            }
+        });
+
+        this.alreadyConsidered.forEach((closedPath) => {
+            if (closedPath.getEndpoint() == tile) {
+                pathIsNew = false;
+            }
+        });
+
+        return pathIsNew;
     }
 
     setTileSearchFlags() {
         this.map.clearAllSearchFlags();
         this.toConsider.forEach((path) => {
             path.getEndpoint().setConsidered(true);
+        });
+        this.getAdjacentTiles().forEach((step) => {
+            step.tile.setConsidered(true);
         });
         this.currentPath.steps.forEach((step) => {
             step.tile.setConsidered(false);
@@ -102,6 +133,7 @@ class Searcher {
 
     assignNewPath(newPath: SearchPath, idx: number): void {
         this.currentPath = newPath;
+        this.currentTile = this.currentPath.getEndpoint();
         this.toConsider.splice(idx, 1);
     }
 }
