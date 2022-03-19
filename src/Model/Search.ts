@@ -62,7 +62,7 @@ class Searcher {
 
             if (pathIsNew) {
                 this.toConsider.push(newPath);
-                newPath.getEndpoint().setConsidered(true);
+                // newPath.getEndpoint().setConsidered(true);
             }
         });
 
@@ -80,6 +80,8 @@ class Searcher {
         //set new currentPath
         this.assignNewPath(this.toConsider[bestScoreIdx], bestScoreIdx);
 
+        this.setTileSearchFlags();
+
         //check for completion
         if (this.currentPath.getEndpoint() == this.end) {
             console.log(this.currentPath.steps);
@@ -87,17 +89,28 @@ class Searcher {
         }
     }
 
-    assignNewPath(newPath: SearchPath, idx: number): void {
+    setTileSearchFlags() {
+        this.map.clearAllSearchFlags();
+        this.toConsider.forEach((path) => {
+            path.getEndpoint().setConsidered(true);
+        });
         this.currentPath.steps.forEach((step) => {
-            step.tile.inPath == false;
+            step.tile.setConsidered(false);
+            step.tile.setInPath(true);
         });
-        newPath.steps.forEach((step) => {
-            step.tile.inPath == true;
-        });
+    }
+
+    assignNewPath(newPath: SearchPath, idx: number): void {
+        // this.currentPath.steps.forEach((step) => {
+        //     step.tile.inPath == false;
+        // });
+        // newPath.steps.forEach((step) => {
+        //     step.tile.inPath == true;
+        // });
         this.currentPath = newPath;
         this.toConsider.splice(idx, 1);
-        this.currentPath.getEndpoint().setInPath(true);
-        this.currentPath.getEndpoint().setConsidered(false);
+        // this.currentPath.getEndpoint().setInPath(true);
+        // this.currentPath.getEndpoint().setConsidered(false);
     }
 }
 

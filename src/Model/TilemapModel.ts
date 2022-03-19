@@ -106,6 +106,15 @@ class TilemapModel extends Tilemap {
         this.grid[tileX][tileY].setEntity(entity);
     }
 
+    clearAllSearchFlags() {
+        this.grid.forEach((column, tileX) => {
+            column.forEach((cell, tileY) => {
+                cell.setConsidered(false);
+                cell.setInPath(false);
+            });
+        });
+    }
+
     checkerboard() {
         this.grid.map((column, tileX) => {
             column.map((cell, tileY) => {
