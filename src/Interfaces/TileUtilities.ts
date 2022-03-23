@@ -15,6 +15,8 @@ interface TileState {
     entity: Entity | null;
     considered: boolean;
     inPath: boolean;
+    inPathEntrance: string;
+    inPathExit: string;
 }
 
 export { TileStep, TileStepNullable, TileState };

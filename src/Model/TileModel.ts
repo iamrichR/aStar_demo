@@ -50,8 +50,13 @@ class TileModel extends Tile {
         this.notifyObservers();
     }
 
-    setInPath(bool: boolean) {
+    //if setting inPath to true, it's expected that you provide entrance and exit directions
+    setInPath(bool: boolean, entrance = '', exit = '') {
         this.inPath = bool;
+        if (bool) {
+            this.inPathEntrance = entrance;
+            this.inPathExit = exit;
+        }
         this.notifyObservers();
     }
 
@@ -66,6 +71,8 @@ class TileModel extends Tile {
             entity: this.entity,
             considered: this.considered,
             inPath: this.inPath,
+            inPathEntrance: this.inPathEntrance,
+            inPathExit: this.inPathExit,
         };
         return state;
     }
