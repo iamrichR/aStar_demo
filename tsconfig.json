@@ -9,7 +9,8 @@
         "noImplicitAny": true,
         //"allowJs": true,
         "sourceMap": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "jsx": "react"
         // "allowSyntheticDefaultImports": true
     }
 }

@@ -3,11 +3,9 @@ import Controller from './Controller';
 
 //TODO - run p5 in instance mode, instead of global
 
-class App {
+class AStarDemo {
     sketch: p5;
     controller: Controller;
-
-    // constructor() {}
 
     setup() {
         this.sketch = new p5((sketch) => {
@@ -61,7 +59,9 @@ class App {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const app = new App();
-    app.setup();
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//     const app = new App();
+//     app.setup();
+// });
+
+export default AStarDemo;

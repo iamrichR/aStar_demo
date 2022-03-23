@@ -1,42 +1,42 @@
-const path = require("path");
+const path = require('path');
 
-const isProduction = process.env.NODE_ENV == "production";
+const isProduction = process.env.NODE_ENV == 'production';
 
 const config = {
-    context: path.resolve(__dirname, "src"),
-    entry: "./App.ts",
+    context: path.resolve(__dirname, 'src'),
+    entry: './index.tsx',
     output: {
-        path: path.resolve(__dirname, "dist"),
-        library: "App",
+        path: path.resolve(__dirname, 'dist'),
+        library: 'App',
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                enforce: "pre",
-                use: ["source-map-loader"],
+                enforce: 'pre',
+                use: ['source-map-loader'],
             },
             {
                 test: /\.(ts|js)x?$/i,
                 exclude: /node_modules/,
-                loader: "babel-loader",
+                loader: 'babel-loader',
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-                type: "asset",
+                type: 'asset',
             },
         ],
     },
     resolve: {
-        extensions: [".ts", ".js"],
+        extensions: ['.ts', '.tsx', '.js'],
     },
 };
 
 module.exports = () => {
     if (isProduction) {
-        config.mode = "production";
+        config.mode = 'production';
     } else {
-        config.mode = "development";
+        config.mode = 'development';
     }
     return config;
 };
