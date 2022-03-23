@@ -8,7 +8,7 @@ class View {
 
     constructor(sketch: p5) {
         this.window = new ViewWindow();
-        let cvs = sketch.createCanvas(...this.window.getDimensions());
+        const cvs = sketch.createCanvas(...this.window.getDimensions());
         cvs.parent('canvas-container');
         this.tilemap = new TilemapPixel(sketch.width, sketch.height);
         sketch.background('#ffffff');
