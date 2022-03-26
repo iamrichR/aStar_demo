@@ -51,7 +51,9 @@ class Searcher {
                     this.map.getDistance(step.tile, this.end)
                 );
 
-                this.toConsider.push(newPath);
+                if (!this.alreadyConsidered.includes(newPath)) {
+                    this.toConsider.push(newPath);
+                }
             }
         });
 
@@ -82,12 +84,12 @@ class Searcher {
     }
 
     getBestFScoreIdx(): number {
-        let bestScore = 0;
+        let bestScore = 999999;
         let bestScoreIdx = 0;
 
         //find the best Fscore out of all open paths
         this.toConsider.forEach((path, idx) => {
-            if (path.fScore > bestScore) {
+            if (path.fScore < bestScore) {
                 bestScore = path.fScore;
                 bestScoreIdx = idx;
             }
@@ -147,6 +149,7 @@ class Searcher {
     }
 
     assignNewPath(newPath: SearchPath, idx: number): void {
+        this.alreadyConsidered.push(this.currentPath);
         this.currentPath = newPath;
         this.currentTile = this.currentPath.getEndpoint();
         this.toConsider.splice(idx, 1);

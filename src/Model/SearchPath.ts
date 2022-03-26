@@ -29,7 +29,7 @@ class SearchPath {
     addStep(newStep: TileStep, heuristic: number): void {
         this.steps.push(newStep);
         this.numSteps++;
-        this.heuristic = heuristic;
+        this.heuristic = heuristic * 10;
         this.calculatefScore();
     }
 
@@ -41,9 +41,13 @@ class SearchPath {
         }
     }
 
+    getStepCost() {
+        return this.numSteps * 10;
+    }
+
     calculatefScore() {
         //TODO - figure out what the actual math for this is supposed to be
-        this.fScore = 200 - this.heuristic * 1.5 + this.numSteps;
+        this.fScore = this.heuristic + this.getStepCost();
     }
 
     static copyPath(oldPath: SearchPath) {
