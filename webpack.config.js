@@ -1,4 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 const isProduction = process.env.NODE_ENV == 'production';
@@ -9,11 +10,13 @@ const config = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         library: 'App',
+        filename: 'js/bundle.js',
     },
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'css/layout.css',
         }),
+        new HtmlWebpackPlugin({ template: 'assets/index.html' }),
     ],
     module: {
         rules: [
