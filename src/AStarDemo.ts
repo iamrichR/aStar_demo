@@ -59,9 +59,4 @@ class AStarDemo {
     }
 }
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     const app = new App();
-//     app.setup();
-// });
-
 export default AStarDemo;

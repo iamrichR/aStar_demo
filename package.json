@@ -6,11 +6,7 @@
     "mode": "development",
     "scripts": {
         "prestart": "npm run build",
-        "start": "node ./scripts/open.js",
-        "poststart": "npm run watch",
-        "prestart:noformat": "npm run build:noformat",
-        "start:noformat": "node ./scripts/open.js",
-        "poststart:noformat": "npm run watch",
+        "start": "concurrently \"webpack serve\" \"node scripts/open.js\"",
         "build": "npm run format && npm run build:clean && npm run build:js",
         "build:noformat": "npm run build:clean && npm run build:js",
         "build:clean": "node ./scripts/clean.js",
@@ -36,6 +32,7 @@
         "@typescript-eslint/parser": "^5.14.0",
         "@webpack-cli/generators": "^1.1.0",
         "babel-loader": "^8.2.3",
+        "concurrently": "^7.1.0",
         "css-loader": "^6.7.1",
         "eslint": "^8.10.0",
         "html-webpack-plugin": "^5.5.0",
@@ -48,7 +45,8 @@
         "source-map-loader": "^3.0.1",
         "typescript": "^4.6.2",
         "webpack": "^5.67.0",
-        "webpack-cli": "^4.9.2"
+        "webpack-cli": "^4.9.2",
+        "webpack-dev-server": "^4.8.1"
     },
     "dependencies": {
         "bulma": "^0.9.3",

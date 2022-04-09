@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV == 'production';
 
 const config = {
     context: path.resolve(__dirname, 'src'),
-    entry: './index.tsx',
+    entry: './index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         library: 'App',
@@ -39,6 +39,13 @@ const config = {
                 type: 'asset',
             },
         ],
+    },
+    devServer: {
+        static: {
+            directory: path.resolve(__dirname, 'dist'),
+        },
+        compress: true,
+        port: 9000,
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
