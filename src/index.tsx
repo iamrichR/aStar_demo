@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import AStarDemo from "./AStarDemo";
+import './scss/styles.scss';
 
 const App = () =>{
     return(

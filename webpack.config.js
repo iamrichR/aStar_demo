@@ -1,3 +1,4 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 const isProduction = process.env.NODE_ENV == 'production';
@@ -9,12 +10,21 @@ const config = {
         path: path.resolve(__dirname, 'dist'),
         library: 'App',
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/layout.css',
+        }),
+    ],
     module: {
         rules: [
             {
                 test: /\.js$/,
                 enforce: 'pre',
                 use: ['source-map-loader'],
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
             },
             {
                 test: /\.(ts|js)x?$/i,
