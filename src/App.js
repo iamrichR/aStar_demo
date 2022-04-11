@@ -7,7 +7,7 @@ import { SearchContext } from './Components/SearchContext';
 export default function App() {
     return (
         <div className="container">
-            <SearchContext.Provider value={{ isSearching: false }}>
+            <SearchContext.Provider value={{ isSearching: true }}>
                 <div id="app-ui">
                     <Header />
                     <Controls />
