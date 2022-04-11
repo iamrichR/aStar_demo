@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AStarDemo from '../AStarDemo';
+import AStarDemo from '../AStar/AStarDemo';
 
 export default function DemoDisplay() {
     const [aStar, setAStar] = useState(new AStarDemo());
