@@ -8,5 +8,5 @@ export default function DemoDisplay() {
         aStar.setup();
     }, []);
 
-    return <div id="canvas-container"></div>;
+    return <div id="canvas-container" className="is-flex flex-center"></div>;
 }
