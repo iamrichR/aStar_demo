@@ -17,12 +17,6 @@ export default function Controls() {
     return (
         <section id="controls" className="section is-small is-flex flex-center">
             {getContextualControls()}
-            {/* <button id="start-btn" className="button">
-                Start Search
-            </button>
-            <button id="next-btn" className="button">
-                Next Step
-            </button> */}
         </section>
     );
 }

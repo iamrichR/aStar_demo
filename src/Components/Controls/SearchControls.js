@@ -1,6 +1,10 @@
 import React from 'react';
+import { useContext } from 'react';
+import { SearchContext } from '../SearchContext';
 
 export default function SearchControls() {
+    const search = useContext(SearchContext);
+
     return (
         <div id="search-controls">
             <div className="columns">
@@ -12,6 +16,15 @@ export default function SearchControls() {
                 <div className="column">
                     <button id="next-btn" className="button">
                         Next Step
+                    </button>
+                </div>
+                <div className="column">
+                    <button
+                        id="next-btn"
+                        className="button"
+                        onClick={search.toggleIsSearching}
+                    >
+                        (Temp) End Search
                     </button>
                 </div>
             </div>

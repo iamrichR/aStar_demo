@@ -1,6 +1,10 @@
 import React from 'react';
+import { useContext } from 'react';
+import { SearchContext } from '../SearchContext';
 
 export default function DefaultControls() {
+    const search = useContext(SearchContext);
+
     return (
         <div id="default-controls">
             <div className="control columns">
@@ -31,7 +35,11 @@ export default function DefaultControls() {
             </div>
             <div className="columns">
                 <div className="btn-column column">
-                    <button id="start-btn" className="button">
+                    <button
+                        id="start-btn"
+                        className="button"
+                        onClick={search.toggleIsSearching}
+                    >
                         Begin Search
                     </button>
                 </div>
