@@ -29,9 +29,9 @@ class Controller {
         }
     }
 
-    continueSearch() {
+    nextSearchStep() {
         if (this.model.isSearching) {
-            this.model.continueSearch();
+            this.model.nextSearchStep();
         }
     }
 

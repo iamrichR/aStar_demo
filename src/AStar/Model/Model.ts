@@ -57,7 +57,7 @@ class Model {
         this.searcher = new Searcher(startPoint, goalPoint, this.tilemap);
     }
 
-    continueSearch() {
+    nextSearchStep() {
         if (this.searcher) {
             this.searcher.aStarSearch_step();
             if (this.searcher.searchComplete) {
