@@ -60,6 +60,10 @@ class AStarDemo {
     beginSearch() {
         this.controller.startSearch();
     }
+
+    nextSearchStep() {
+        this.controller.nextSearchStep();
+    }
 }
 
 export default AStarDemo;

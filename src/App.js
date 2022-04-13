@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 export default function App() {
     const [isSearching, setIsSearching] = useState(false);
+    const [stepCount, setStepCount] = useState(0);
 
     return (
         <div className="container">
@@ -16,6 +17,8 @@ export default function App() {
                     toggleIsSearching: () => {
                         setIsSearching(!isSearching);
                     },
+                    stepCount: stepCount,
+                    setStepCount: setStepCount,
                 }}
             >
                 <div id="app-ui">

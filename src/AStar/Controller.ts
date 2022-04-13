@@ -26,9 +26,6 @@ class Controller {
     startSearch() {
         if (!this.model.isSearching) {
             this.model.startSearch();
-            for (let i = 0; i < 10; i++) {
-                this.model.nextSearchStep();
-            }
         }
     }
 

@@ -17,5 +17,11 @@ export default function DemoDisplay() {
         }
     }, [search.isSearching]);
 
+    useEffect(() => {
+        if (search.stepCount > 0) {
+            aStar.nextSearchStep();
+        }
+    }, [search.stepCount]);
+
     return <div id="canvas-container" className="is-flex flex-center"></div>;
 }

@@ -14,7 +14,13 @@ export default function SearchControls() {
                     </button>
                 </div>
                 <div className="column">
-                    <button id="next-btn" className="button">
+                    <button
+                        id="next-btn"
+                        className="button"
+                        onClick={() => {
+                            search.setStepCount(search.stepCount + 1);
+                        }}
+                    >
                         Next Step
                     </button>
                 </div>
