@@ -58,7 +58,7 @@ class AStarDemo {
 
     //the rest of the methods are state update methods from the react app
     beginSearch() {
-        this.controller.startSearch;
+        this.controller.startSearch();
     }
 }
 

@@ -13,7 +13,7 @@ export default function DemoDisplay() {
     useEffect(() => {
         if (search.isSearching) {
             console.log('using effect...');
-            aStar.beginSearch;
+            aStar.beginSearch();
         }
     }, [search.isSearching]);
 
