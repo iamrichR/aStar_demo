@@ -7,8 +7,11 @@ import p5 from 'p5';
 class Controller {
     view: View;
     model: Model;
+    setupComplete: boolean;
 
-    // constructor() {}
+    constructor() {
+        this.setupComplete = false;
+    }
 
     /*
     all this stuff has to be initialized outside of the constuctor 
@@ -21,6 +24,7 @@ class Controller {
         this.model.setupObservers(this.view.tilemap.grid);
         this.model.createInitialState();
         //this.model.tilemap.checkerboard();
+        this.setupComplete = true;
     }
 
     startSearch() {

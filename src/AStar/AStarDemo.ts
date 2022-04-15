@@ -10,10 +10,6 @@ class AStarDemo {
             this.buildSketch(sketch);
         });
         this.controller = new Controller();
-        // this.attachButtonEvents({
-        //     startButton: document.getElementById('start-btn'),
-        //     nextButton: document.getElementById('next-btn'),
-        // });
     }
 
     buildSketch(sketch: p5) {
@@ -58,11 +54,21 @@ class AStarDemo {
 
     //the rest of the methods are state update methods from the react app
     beginSearch() {
-        this.controller.startSearch();
+        if (this.controller.setupComplete) {
+            this.controller.startSearch();
+        }
     }
 
     nextSearchStep() {
-        this.controller.nextSearchStep();
+        if (this.controller.setupComplete) {
+            this.controller.nextSearchStep();
+        }
+    }
+
+    changePlacingState(newState: string) {
+        if (this.controller.setupComplete) {
+            console.log(`changing state to ${newState}`);
+        }
     }
 }
 
