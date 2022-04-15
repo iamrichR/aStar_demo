@@ -8,6 +8,7 @@ class Controller {
     view: View;
     model: Model;
     setupComplete: boolean;
+    placingState: string;
 
     constructor() {
         this.setupComplete = false;
@@ -24,6 +25,8 @@ class Controller {
         this.model.setupObservers(this.view.tilemap.grid);
         this.model.createInitialState();
         //this.model.tilemap.checkerboard();
+        this.placingState = 'START';
+
         this.setupComplete = true;
     }
 
@@ -39,6 +42,10 @@ class Controller {
         }
     }
 
+    updatePlacingState(newState: string) {
+        this.placingState = newState;
+    }
+
     update() {
         this.model.update();
     }
@@ -48,9 +55,24 @@ class Controller {
     }
 
     mousePressed(mouseX: number, mouseY: number) {
-        this.model.toggleWallAtPoint(
-            ...this.view.getTileFromMouse(mouseX, mouseY)
-        );
+        switch (this.placingState) {
+            case 'START':
+                console.log('START');
+                break;
+            case 'END':
+                console.log('END');
+                break;
+            case 'WALL':
+                this.model.toggleWallAtPoint(
+                    ...this.view.getTileFromMouse(mouseX, mouseY)
+                );
+                break;
+            default:
+                console.log(
+                    'somehow an unauthorized placing state value got through?'
+                );
+                break;
+        }
     }
 }
 

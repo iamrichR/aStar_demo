@@ -67,7 +67,7 @@ class AStarDemo {
 
     changePlacingState(newState: string) {
         if (this.controller.setupComplete) {
-            console.log(`changing state to ${newState}`);
+            this.controller.updatePlacingState(newState);
         }
     }
 }
