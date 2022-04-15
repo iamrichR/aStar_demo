@@ -1,9 +1,17 @@
 import React from 'react';
 import { useContext } from 'react';
 import { SearchContext } from '../SearchContext';
+import { MouseClickContext, placing } from '../MouseClickContext';
 
 export default function DefaultControls() {
+    function handleChange(event) {
+        if (placingState.currentlyPlacing != event.target.value) {
+            placingState.setCurrentlyPlacing(event.target.value);
+        }
+    }
+
     const search = useContext(SearchContext);
+    const placingState = useContext(MouseClickContext);
 
     return (
         <div id="default-controls">
@@ -12,7 +20,12 @@ export default function DefaultControls() {
                     <input
                         id="place-start-radio"
                         type="radio"
+                        value={placing.start}
                         name="placement-selection"
+                        checked={
+                            placingState.currentlyPlacing === placing.start
+                        }
+                        onChange={handleChange}
                     ></input>
                     &nbsp;Place Start Point
                 </label>
@@ -20,7 +33,10 @@ export default function DefaultControls() {
                     <input
                         id="place-end-radio"
                         type="radio"
+                        value={placing.end}
                         name="placement-selection"
+                        checked={placingState.currentlyPlacing === placing.end}
+                        onChange={handleChange}
                     ></input>
                     &nbsp;Place End Point
                 </label>
@@ -28,7 +44,10 @@ export default function DefaultControls() {
                     <input
                         id="place-walls-radio"
                         type="radio"
+                        value={placing.wall}
                         name="placement-selection"
+                        checked={placingState.currentlyPlacing === placing.wall}
+                        onChange={handleChange}
                     ></input>
                     &nbsp;Place Walls
                 </label>

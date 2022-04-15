@@ -4,8 +4,7 @@ import Header from './Components/Header';
 import DemoDisplay from './Components/DemoDisplay';
 import { SearchContext } from './Components/SearchContext';
 import { useState } from 'react';
-import { MouseClickContext } from './Components/MouseClickContext';
-import { placing } from './Components/MouseClickContext';
+import { MouseClickContext, placing } from './Components/MouseClickContext';
 
 export default function App() {
     const [isSearching, setIsSearching] = useState(false);
