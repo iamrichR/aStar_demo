@@ -88,6 +88,10 @@ class TilemapModel extends Tilemap {
         return grid;
     }
 
+    removeEntityAtPoint(tileX: number, tileY: number) {
+        this.grid[tileX][tileY].removeEntity();
+    }
+
     setupObservers(viewTiles: TilePixel[][]) {
         this.grid.forEach((column, tileX) => {
             column.forEach((cell, tileY) => {
@@ -98,7 +102,7 @@ class TilemapModel extends Tilemap {
 
     toggleWallAtTile(tileX: number, tileY: number) {
         if (this.isInBounds(tileX, tileY)) {
-            this.grid[tileX][tileY].createWall();
+            this.grid[tileX][tileY].toggleWall();
         }
     }
 

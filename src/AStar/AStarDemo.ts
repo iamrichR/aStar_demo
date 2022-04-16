@@ -18,7 +18,6 @@ class AStarDemo {
         };
 
         sketch.draw = () => {
-            this.controller.update();
             this.controller.draw(this.sketch);
         };
 

@@ -46,26 +46,29 @@ class Controller {
         this.placingState = newState;
     }
 
-    update() {
-        this.model.update();
-    }
-
     draw(sketch: p5) {
         this.view.draw(sketch);
     }
 
-    mousePressed(mouseX: number, mouseY: number) {
+    mousePressed(mouseX: number, mouseY: number): void {
+        const [tileX, tileY] = this.view.getTileFromMouse(mouseX, mouseY);
+        if (this.model.entityExistsAtPoint(tileX, tileY)) {
+            return;
+        }
+
+        if (!this.model.tilemap.isInBounds(tileX, tileY)) {
+            return;
+        }
+
         switch (this.placingState) {
             case 'START':
-                console.log('START');
+                this.model.placeStartAtPoint(tileX, tileY);
                 break;
             case 'END':
-                console.log('END');
+                this.model.placeEndAtPoint(tileX, tileY);
                 break;
             case 'WALL':
-                this.model.toggleWallAtPoint(
-                    ...this.view.getTileFromMouse(mouseX, mouseY)
-                );
+                this.model.toggleWallAtPoint(tileX, tileY);
                 break;
             default:
                 console.log(

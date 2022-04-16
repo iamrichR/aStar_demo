@@ -5,39 +5,74 @@ import EndPoint from './Entities/EndPoint';
 import Searcher from './Search';
 import TilePixel from '../View/TilePixel';
 import SearchPath from './SearchPath';
+import Entity from './Entities/Entity';
 
 class Model {
     tilemap: TilemapModel;
     isSearching: boolean;
     lastSearch: SearchPath | null;
     searcher: Searcher | null;
+    startPoint: StartPoint;
+    endPoint: EndPoint;
 
     constructor(mapDetails: { dimensions: number[] }) {
         this.tilemap = new TilemapModel(mapDetails);
         this.isSearching = false;
         this.lastSearch = null;
         this.searcher = null;
-    }
-
-    update() {
-        //nothing for now
+        this.startPoint = new StartPoint(8, 12);
+        this.endPoint = new EndPoint(24, 4);
     }
 
     createInitialState() {
-        //start point in mid-left area
-        this.tilemap.createEntityAtTile(8, 12, new StartPoint(0, 0));
-        //target point in mid-right area
-        this.tilemap.createEntityAtTile(24, 4, new EndPoint(0, 0));
-        //couple of wall tiles in middle, blocking a straight line path
-        // this.tilemap.createEntityAtTile(15, 9, new Wall(0, 0));
-        // this.tilemap.createEntityAtTile(15, 10, new Wall(0, 0));
-        // this.tilemap.createEntityAtTile(16, 10, new Wall(0, 0));
-        //this.tilemap.createEntityAtTile(16, 11, new Wall(0, 0));
-        //this.tilemap.createEntityAtTile(16, 12, new Wall(0, 0));
-        //this.tilemap.createEntityAtTile(16, 13, new Wall(0, 0));
-        // this.tilemap.createEntityAtTile(16, 14, new Wall(0, 0));
-        // this.tilemap.createEntityAtTile(15, 14, new Wall(0, 0));
-        // this.tilemap.createEntityAtTile(15, 15, new Wall(0, 0));
+        this.tilemap.createEntityAtTile(
+            ...this.getStartPointCoords(),
+            new StartPoint(0, 0)
+        );
+        this.tilemap.createEntityAtTile(
+            ...this.getEndPointCoords(),
+            new EndPoint(0, 0)
+        );
+    }
+
+    getStartPointCoords() {
+        const points: [number, number] = [this.startPoint.x, this.startPoint.y];
+        return points;
+    }
+
+    getEndPointCoords() {
+        const points: [number, number] = [this.endPoint.x, this.endPoint.y];
+        return points;
+    }
+
+    entityExistsAtPoint(tileX: number, tileY: number): boolean {
+        return !!this.tilemap.getTile(tileX, tileY)?.entity;
+    }
+
+    placeEntityAtPoint(tileX: number, tileY: number, entity: Entity): void {
+        this.tilemap.createEntityAtTile(tileX, tileY, entity);
+    }
+
+    placeStartAtPoint(tileX: number, tileY: number) {
+        const newStart = new StartPoint(0, 0);
+        this.placeEntityAtPoint(tileX, tileY, newStart);
+        this.removeStartPoint();
+        this.startPoint = newStart;
+    }
+
+    removeStartPoint() {
+        this.tilemap.getTile(...this.getStartPointCoords())?.removeEntity();
+    }
+
+    placeEndAtPoint(tileX: number, tileY: number) {
+        const newEnd = new EndPoint(0, 0);
+        this.placeEntityAtPoint(tileX, tileY, newEnd);
+        this.removeEndPoint();
+        this.endPoint = newEnd;
+    }
+
+    removeEndPoint() {
+        this.tilemap.getTile(...this.getEndPointCoords())?.removeEntity();
     }
 
     toggleWallAtPoint(tileX: number, tileY: number) {
@@ -50,11 +85,16 @@ class Model {
 
     startSearch() {
         this.isSearching = true;
-        const startPoint = this.tilemap.grid[8][12];
-        const goalPoint = this.tilemap.grid[24][4];
+        const startTile = this.tilemap.getTile(...this.getStartPointCoords());
+        const endtile = this.tilemap.getTile(...this.getEndPointCoords());
 
         // return searchDetails;
-        this.searcher = new Searcher(startPoint, goalPoint, this.tilemap);
+        if (startTile && endtile) {
+            this.searcher = new Searcher(startTile, endtile, this.tilemap);
+        } else {
+            //this should be unreachable
+            console.log('Error:  problem with start and/or endpoint');
+        }
     }
 
     nextSearchStep() {
