@@ -17,6 +17,8 @@ interface TileState {
     inPath: boolean;
     inPathEntrance: string;
     inPathExit: string;
+    isClosed: boolean;
+    fScore: number;
 }
 
 export { TileStep, TileStepNullable, TileState };

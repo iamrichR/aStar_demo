@@ -129,7 +129,7 @@ class Searcher {
         });
         this.currentPath.steps.forEach((step, stepIdx) => {
             step.tile.setConsidered(false);
-            console.log(step);
+            // console.log(step);
             let entranceDir = '';
             //exit direction of the previous tile gets inverted
             //probably a better way to do this
@@ -150,9 +150,14 @@ class Searcher {
 
     assignNewPath(newPath: SearchPath, idx: number): void {
         this.alreadyConsidered.push(this.currentPath);
+        this.currentPath.steps.forEach((step) => {
+            step.tile.isClosed = true;
+        });
+        this.currentPath.getEndpoint().fScore = this.currentPath.fScore;
         this.currentPath = newPath;
         this.currentTile = this.currentPath.getEndpoint();
         this.toConsider.splice(idx, 1);
+        // console.log(this.alreadyConsidered);
     }
 }
 

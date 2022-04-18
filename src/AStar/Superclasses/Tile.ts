@@ -8,6 +8,8 @@ class Tile {
     inPath: boolean;
     inPathEntrance: string;
     inPathExit: string;
+    isClosed: boolean;
+    fScore: number;
 
     constructor(tileX: number, tileY: number) {
         this.tileX = tileX;
@@ -17,6 +19,8 @@ class Tile {
         this.inPath = false;
         this.inPathEntrance = '';
         this.inPathExit = '';
+        this.isClosed = false;
+        this.fScore = -1;
     }
 
     getTileCoord() {

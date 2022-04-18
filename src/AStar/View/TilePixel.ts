@@ -33,6 +33,7 @@ class TilePixel extends Tile {
     draw(sketch: p5) {
         this.drawOutline(sketch);
         if (this.considered) this.drawConsidered(sketch);
+        // if (this.isClosed) this.drawClosed(sketch);
         if (this.inPath) this.drawInPath(sketch);
         if (this.entity) {
             switch (this.entity.getEntityType().toLowerCase()) {
@@ -50,6 +51,21 @@ class TilePixel extends Tile {
                     break;
             }
         }
+    }
+
+    drawClosed(sketch: p5) {
+        //fscore ranges from ~550 to 0
+        //we divide fscore by 2 in order to roughly get a 0-255 range
+        //we max out at 255 just to be safe
+        const fScoreToScale = Math.floor(this.fScore / 2);
+        const MAXVAL = 255;
+        const fillRed = Math.min(fScoreToScale, MAXVAL);
+        // if (sketch.frameCount % 60 == 0) {
+        //     console.log(fillRed);
+        // }
+        const [x, y] = this.getPixelCoord();
+        sketch.fill(fillRed, 1, 100, 50);
+        sketch.rect(x, y, this.width, this.height);
     }
 
     drawConsidered(sketch: p5) {
@@ -153,6 +169,8 @@ class TilePixel extends Tile {
         this.inPath = modelState.inPath;
         this.inPathEntrance = modelState.inPathEntrance;
         this.inPathExit = modelState.inPathExit;
+        this.isClosed = modelState.isClosed;
+        this.fScore = modelState.fScore;
     }
 }
 

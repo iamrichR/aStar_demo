@@ -30,7 +30,7 @@ class SearchPath {
         this.steps.push(newStep);
         this.numSteps++;
         this.heuristic = heuristic * 10;
-        this.calculatefScore();
+        this.calculateFScore();
     }
 
     getEndpoint(): TileModel {
@@ -45,8 +45,7 @@ class SearchPath {
         return this.numSteps * 10;
     }
 
-    calculatefScore() {
-        //TODO - figure out what the actual math for this is supposed to be
+    calculateFScore() {
         this.fScore = this.heuristic + this.getStepCost();
     }
 

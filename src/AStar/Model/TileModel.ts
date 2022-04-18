@@ -73,6 +73,8 @@ class TileModel extends Tile {
             inPath: this.inPath,
             inPathEntrance: this.inPathEntrance,
             inPathExit: this.inPathExit,
+            isClosed: this.isClosed,
+            fScore: this.fScore,
         };
         return state;
     }
