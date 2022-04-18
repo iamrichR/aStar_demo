@@ -69,6 +69,12 @@ class AStarDemo {
             this.controller.updatePlacingState(newState);
         }
     }
+
+    changeAnimationState(isActive: boolean, speed: number) {
+        if (this.controller.setupComplete) {
+            this.controller.changeAnimationState(isActive, speed);
+        }
+    }
 }
 
 export default AStarDemo;

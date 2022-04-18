@@ -9,6 +9,8 @@ class Controller {
     model: Model;
     setupComplete: boolean;
     placingState: string;
+    animationActive: boolean;
+    animationDelay: number;
 
     constructor() {
         this.setupComplete = false;
@@ -26,13 +28,19 @@ class Controller {
         this.model.createInitialState();
         //this.model.tilemap.checkerboard();
         this.placingState = 'START';
+        animationActive: false;
+        animationSpeed: 60 / 1;
 
         this.setupComplete = true;
     }
 
     startSearch() {
         if (!this.model.isSearching) {
-            this.model.startSearch();
+            if (this.animationActive) {
+                this.model.startSearch();
+            } else {
+                this.model.startSearch();
+            }
         }
     }
 
@@ -47,7 +55,18 @@ class Controller {
     }
 
     draw(sketch: p5) {
+        if (this.model.isSearching && this.animationActive) {
+            if (sketch.frameCount % this.animationDelay == 0) {
+                this.nextSearchStep();
+            }
+        }
         this.view.draw(sketch);
+        // console.log(sketch.frameCount);
+    }
+
+    changeAnimationState(isActive: boolean, speed: number) {
+        this.animationActive = isActive;
+        this.animationDelay = 60 / speed;
     }
 
     mousePressed(mouseX: number, mouseY: number): void {
