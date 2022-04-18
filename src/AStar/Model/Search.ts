@@ -131,20 +131,20 @@ class Searcher {
             step.tile.setConsidered(false);
             // console.log(step);
             let entranceDir = '';
-            //exit direction of the previous tile gets inverted
-            //probably a better way to do this
-            if (stepIdx - 1 >= 0) {
-                const prevDir = this.currentPath.steps[stepIdx - 1].direction;
-                if (prevDir == 'north') entranceDir = 'south';
-                if (prevDir == 'east') entranceDir = 'west';
-                if (prevDir == 'south') entranceDir = 'north';
-                if (prevDir == 'west') entranceDir = 'east';
-            }
-            // let exitDir = '';
-            // if (stepIdx + 1 < this.currentPath.steps.length) {
-            //     exitDir = this.currentPath.steps[stepIdx + 1].direction;
+            if (step.direction == 'north') entranceDir = 'south';
+            if (step.direction == 'east') entranceDir = 'west';
+            if (step.direction == 'south') entranceDir = 'north';
+            if (step.direction == 'west') entranceDir = 'east';
+
+            // if (stepIdx - 1 >= 0 && stepIdx + 1 < this.currentPath.steps.length) {
+            //     const prevStep = this.currentPath.steps[stepIdx - 1];
+
             // }
-            step.tile.setInPath(true, entranceDir, step.direction);
+            let exitDir = '';
+            if (stepIdx + 1 < this.currentPath.steps.length) {
+                exitDir = this.currentPath.steps[stepIdx + 1].direction;
+            }
+            step.tile.setInPath(true, entranceDir, exitDir);
         });
     }
 
