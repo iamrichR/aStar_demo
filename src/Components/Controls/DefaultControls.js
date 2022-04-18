@@ -1,17 +1,26 @@
 import React from 'react';
 import { useContext } from 'react';
 import { SearchContext } from '../SearchContext';
+import { AnimationContext } from '../AnimationContext';
 import { MouseClickContext, placing } from '../MouseClickContext';
 
 export default function DefaultControls() {
-    function handleChange(event) {
+    function handleRadioChange(event) {
         if (placingState.currentlyPlacing != event.target.value) {
             placingState.setCurrentlyPlacing(event.target.value);
         }
     }
 
+    function handleCheckboxChange(event) {
+        animationState.setAnimation({
+            isActive: event.target.checked,
+            speed: animationState.speed,
+        });
+    }
+
     const search = useContext(SearchContext);
     const placingState = useContext(MouseClickContext);
+    const animationState = useContext(AnimationContext);
 
     return (
         <div id="default-controls">
@@ -25,7 +34,7 @@ export default function DefaultControls() {
                         checked={
                             placingState.currentlyPlacing === placing.start
                         }
-                        onChange={handleChange}
+                        onChange={handleRadioChange}
                     ></input>
                     &nbsp;Place Start Point
                 </label>
@@ -36,7 +45,7 @@ export default function DefaultControls() {
                         value={placing.end}
                         name="placement-selection"
                         checked={placingState.currentlyPlacing === placing.end}
-                        onChange={handleChange}
+                        onChange={handleRadioChange}
                     ></input>
                     &nbsp;Place End Point
                 </label>
@@ -47,7 +56,7 @@ export default function DefaultControls() {
                         value={placing.wall}
                         name="placement-selection"
                         checked={placingState.currentlyPlacing === placing.wall}
-                        onChange={handleChange}
+                        onChange={handleRadioChange}
                     ></input>
                     &nbsp;Place Walls
                 </label>
@@ -64,7 +73,11 @@ export default function DefaultControls() {
                 </div>
                 <div className="btn-column column">
                     <label className="checkbox">
-                        <input id="animation-checkbox" type="checkbox"></input>
+                        <input
+                            id="animation-checkbox"
+                            type="checkbox"
+                            onChange={handleCheckboxChange}
+                        ></input>
                         &nbsp;Animate Results?
                     </label>
                 </div>

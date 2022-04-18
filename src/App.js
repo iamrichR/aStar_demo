@@ -5,11 +5,18 @@ import DemoDisplay from './Components/DemoDisplay';
 import { SearchContext } from './Components/SearchContext';
 import { useState } from 'react';
 import { MouseClickContext, placing } from './Components/MouseClickContext';
+import { AnimationContext } from './Components/AnimationContext';
 
 export default function App() {
     const [isSearching, setIsSearching] = useState(false);
     const [stepCount, setStepCount] = useState(0);
     const [currentlyPlacing, setCurrentlyPlacing] = useState(placing.start);
+    const [animationState, setAnimation] = useState({
+        isActive: false,
+        speed: 1,
+    });
+
+    console.log(animationState);
 
     return (
         <div className="container">
@@ -29,11 +36,19 @@ export default function App() {
                         setCurrentlyPlacing: setCurrentlyPlacing,
                     }}
                 >
-                    <div id="app-ui">
-                        <Header />
-                        <Controls />
-                    </div>
-                    <DemoDisplay />
+                    <AnimationContext.Provider
+                        value={{
+                            isActive: animationState.isActive,
+                            speed: animationState.speed,
+                            setAnimation: setAnimation,
+                        }}
+                    >
+                        <div id="app-ui">
+                            <Header />
+                            <Controls />
+                        </div>
+                        <DemoDisplay />
+                    </AnimationContext.Provider>
                 </MouseClickContext.Provider>
             </SearchContext.Provider>
         </div>
