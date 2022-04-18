@@ -52,9 +52,6 @@ class Controller {
 
     mousePressed(mouseX: number, mouseY: number): void {
         const [tileX, tileY] = this.view.getTileFromMouse(mouseX, mouseY);
-        if (this.model.entityExistsAtPoint(tileX, tileY)) {
-            return;
-        }
 
         if (!this.model.tilemap.isInBounds(tileX, tileY)) {
             return;
@@ -62,10 +59,14 @@ class Controller {
 
         switch (this.placingState) {
             case 'START':
-                this.model.placeStartAtPoint(tileX, tileY);
+                if (!this.model.entityExistsAtPoint(tileX, tileY)) {
+                    this.model.placeStartAtPoint(tileX, tileY);
+                }
                 break;
             case 'END':
-                this.model.placeEndAtPoint(tileX, tileY);
+                if (!this.model.entityExistsAtPoint(tileX, tileY)) {
+                    this.model.placeEndAtPoint(tileX, tileY);
+                }
                 break;
             case 'WALL':
                 this.model.toggleWallAtPoint(tileX, tileY);
