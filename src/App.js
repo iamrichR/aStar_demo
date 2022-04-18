@@ -16,6 +16,8 @@ export default function App() {
     const [currentlyPlacing, setCurrentlyPlacing] = useState(placing.start);
     const [animationState, setAnimation] = useState(animationDefaults);
 
+    console.log(animationState);
+
     return (
         <div className="container">
             <SearchContext.Provider

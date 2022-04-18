@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { SearchContext } from '../SearchContext';
 import { AnimationContext } from '../AnimationContext';
 import { MouseClickContext, placing } from '../MouseClickContext';
+import { RangeSlider } from './RangeSlider';
 
 export default function DefaultControls() {
     function handleRadioChange(event) {
@@ -15,6 +16,13 @@ export default function DefaultControls() {
         animationState.setAnimation({
             isActive: event.target.checked,
             speed: animationState.speed,
+        });
+    }
+
+    function updateSpeed(newSpeed) {
+        animationState.setAnimation({
+            isActive: animationState.isActive,
+            speed: newSpeed,
         });
     }
 
@@ -80,6 +88,9 @@ export default function DefaultControls() {
                         ></input>
                         &nbsp;Animate Results?
                     </label>
+                </div>
+                <div className="btn-column column">
+                    <RangeSlider getValueUpdate={updateSpeed} />
                 </div>
             </div>
         </div>
