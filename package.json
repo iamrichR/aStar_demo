@@ -15,10 +15,13 @@
         "format": "npm run prettier:fix && npm run lint:fix",
         "lint:check": "eslint src/**/*.ts",
         "lint:fix": "eslint src/**/*.ts --fix",
-        "prettier:fix": "prettier --write src/**/*.ts"
+        "prettier:fix": "prettier --write src/**/*.ts",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist"
     },
     "keywords": [],
     "author": "",
+    "homepage": "http://iamrichr.github.io/aStar_demo",
     "license": "ISC",
     "devDependencies": {
         "@babel/core": "^7.16.12",
@@ -35,6 +38,7 @@
         "concurrently": "^7.1.0",
         "css-loader": "^6.7.1",
         "eslint": "^8.10.0",
+        "gh-pages": "^4.0.0",
         "html-webpack-plugin": "^5.5.0",
         "mini-css-extract-plugin": "^2.6.0",
         "path-browserify": "^1.0.1",
